@@ -2,7 +2,7 @@ name: ci_cd parts_online_store
 
 on:
   - push
-  - merge request
+  - pull_request
 
 env:
   DJANGO_SETTINGS_MODULE: config.settings.dev
