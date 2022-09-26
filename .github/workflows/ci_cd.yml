@@ -34,4 +34,5 @@ jobs:
 
       - name: Run tests
         run: |
-          pipenv run python3 src/manage.py test&&flake8
+          pipenv run python3 src/manage.py test
+          pipenv run flake8 --max-line-length=120 --exclude=*/migrations/*
