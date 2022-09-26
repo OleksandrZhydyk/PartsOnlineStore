@@ -23,15 +23,17 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install pipenv
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pipenv
+#          python -m pip install pipx
+#          pipx install pipenv
           pipenv install
       - name: Check migrations
         run: |
-          pipenv run python src/manage.py makemigrations
-          pipenv run python src/manage.py migrate
-          pipenv run python src/manage.py check
+          pipenv run python3 src/manage.py makemigrations
+          pipenv run python3 src/manage.py migrate
+          pipenv run python3 src/manage.py check
 
       - name: Run tests
         run: |
-          pipenv run python src/manage.py test&&flake8
+          pipenv run python3 src/manage.py test&&flake8
