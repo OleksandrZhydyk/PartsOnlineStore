@@ -28,11 +28,11 @@ jobs:
           pipenv install
       - name: Check migrations
         run: |
-          pipenv run python3 src/manage.py makemigrations
-          pipenv run python3 src/manage.py migrate
-          pipenv run python3 src/manage.py check
+          pipenv run src/manage.py makemigrations
+          pipenv run src/manage.py migrate
+          pipenv run src/manage.py check
 
       - name: Run tests
         run: |
-          pipenv run python3 src/manage.py test
+          pipenv run src/manage.py test
           pipenv run flake8 --max-line-length=120 --exclude=*/migrations/*
