@@ -1,3 +1,5 @@
-from django.db import models # NOQA
+from django.db import models
 
-# Create your models here.
+
+class Shop(models.Model):
+    address = models.CharField(max_length=255)
