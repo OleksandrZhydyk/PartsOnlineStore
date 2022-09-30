@@ -25,9 +25,6 @@ django-extensions = "*"
 black = "==22.8.0"
 flake8 = "==5.0.4"
 isort = "==5.10.1"
-pygraphviz = "*"
-graphviz = "*"
-pydot = "*"
 
 [requires]
 python_version = "*"
