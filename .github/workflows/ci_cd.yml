@@ -25,7 +25,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install pipenv
-          python3 -m pip install graphviz libgraphviz
           pipenv install
           pipenv install --dev
       - name: Check migrations
