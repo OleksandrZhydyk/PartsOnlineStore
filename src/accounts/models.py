@@ -1,16 +1,18 @@
+from uuid import uuid4
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
 from accounts.managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-
+    id = models.UUIDField(primary_key=True, default=uuid4, unique=True, editable=False)
     email = models.EmailField(_("Email address"), null=True, unique=True)
     first_name = models.CharField(_("First name"), max_length=150, blank=True)
     last_name = models.CharField(_("Last name"), max_length=150, blank=True)
@@ -23,8 +25,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         _("active"),
         default=True,
         help_text=_(
-            "Designates whether this user should be treated as active. "
-            "Unselect this instead of deleting accounts."
+            "Designates whether this user should be treated as active. " "Unselect this instead of deleting accounts."
         ),
     )
     date_joined = models.DateTimeField(default=timezone.now, verbose_name="Account creation date")
@@ -58,11 +59,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, primary_key=True,)
+    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, primary_key=True)
     phone_number = PhoneNumberField(_("Phone number"), blank=True, null=True, help_text="Contact phone number")
     date_created = models.DateTimeField(auto_now=True, null=True, editable=False, verbose_name="Modified date")
-    photo = models.ImageField(default='profiles_avatars/empty_avatar.png', null=True,
-                              blank=True, upload_to="profiles_avatars/%Y/%m/%d/", verbose_name="Avatar")
+    photo = models.ImageField(
+        default="profiles_avatars/empty_avatar.png",
+        null=True,
+        blank=True,
+        upload_to="profiles_avatars/%Y/%m/%d/",
+        verbose_name="Avatar",
+    )
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address")
 
     def __str__(self):
@@ -71,6 +77,5 @@ class Profile(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
-    part = models.ForeignKey(to='catalogue.Part', on_delete=models.CASCADE)
+    part = models.ForeignKey(to="catalogue.Part", on_delete=models.CASCADE)
     comment = models.TextField(blank=True, null=True)
-

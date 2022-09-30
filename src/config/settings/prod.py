@@ -1,4 +1,4 @@
-from config.settings.base import *
+from config.settings.base import *  # NOQA
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
