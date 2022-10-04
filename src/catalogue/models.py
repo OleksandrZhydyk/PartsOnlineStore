@@ -36,6 +36,6 @@ class MachineModel(models.Model):
 
     model = models.CharField(max_length=15, verbose_name="Model")
     machine_type = models.IntegerField(
-        choices=MACHINE_TYPES, default="Please choose a machine type", verbose_name="Machine type"
+        choices=MACHINE_TYPES, default=1, verbose_name="Machine type"
     )
     part = models.ManyToManyField(to="catalogue.Part", related_name="machine_model")
