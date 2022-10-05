@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
+from django.db import IntegrityError, transaction
 from django.test import TestCase
 
 from cart.models import Cart, CartItem
@@ -39,7 +39,10 @@ class TestCartItemModel(TestCase):
 
     def test_cart_item_error(self):
 
-        with self.assertRaises(ValidationError):
-            invalid_quantity = 0
-            self.cart_item = CartItem.objects.create(part=self.part, cart=self.cart, quantity=invalid_quantity)
-            self.cart_item.full_clean()
+        with transaction.atomic():
+            invalid_quantity = -1
+            self.assertRaises(
+                IntegrityError,
+                CartItem.objects.create,
+                **{"part": self.part, "cart": self.cart, "quantity": invalid_quantity},
+            )
