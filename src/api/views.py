@@ -1,10 +1,11 @@
-from rest_framework.generics import UpdateAPIView, DestroyAPIView, RetrieveAPIView, \
-    ListCreateAPIView
+from rest_framework.generics import (DestroyAPIView, ListCreateAPIView,
+                                     RetrieveAPIView, UpdateAPIView)
 from rest_framework.viewsets import ModelViewSet
 
 from accounts.models import CustomUser
-from api.serializers import CustomUserSerializer, PartSerializer, MachineModelSerializer, MachineModelPartsSerializer
-from catalogue.models import Part, MachineModel
+from api.serializers import (CustomUserSerializer, MachineModelPartsSerializer,
+                             MachineModelSerializer, PartSerializer)
+from catalogue.models import MachineModel, Part
 
 
 class UserViewSet(ModelViewSet):
@@ -32,7 +33,7 @@ class PartUpdateView(UpdateAPIView):
 class PartRetrieveView(RetrieveAPIView):
     queryset = Part.objects.all()
     serializer_class = PartSerializer
-    lookup_field = 'part_number'
+    lookup_field = "part_number"
 
 
 class ModelListCreateView(ListCreateAPIView):
@@ -56,6 +57,3 @@ class ModelRetrieveView(RetrieveAPIView):
     queryset = MachineModel.objects.all()
     lookup_field = "model"
     serializer_class = MachineModelPartsSerializer
-
-
-

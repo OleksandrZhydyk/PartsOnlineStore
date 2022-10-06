@@ -18,8 +18,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="shop",
             name="part",
-            field=models.ManyToManyField(
-                null=True, related_name="shop", to="catalogue.part"
-            ),
+            field=models.ManyToManyField(null=True, related_name="shop", to="catalogue.part"),
         ),
     ]

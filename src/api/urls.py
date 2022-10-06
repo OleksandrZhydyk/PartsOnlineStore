@@ -1,8 +1,9 @@
-from django.urls import path, include
+from django.urls import include, path
 from rest_framework import routers
 
-from api.views import UserViewSet, PartUpdateView, PartDeleteView, PartRetrieveView, \
-    PartListCreateView, ModelListCreateView, ModelUpdateView, ModelDeleteView, ModelRetrieveView
+from api.views import (ModelDeleteView, ModelListCreateView, ModelRetrieveView,
+                       ModelUpdateView, PartDeleteView, PartListCreateView,
+                       PartRetrieveView, PartUpdateView, UserViewSet)
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet)
@@ -18,5 +19,4 @@ urlpatterns = [
     path("model/<str:model>/", ModelRetrieveView.as_view()),
     path("model/<str:model>/delete/", ModelDeleteView.as_view()),
     path("model/<str:model>/update/", ModelUpdateView.as_view()),
-
 ]

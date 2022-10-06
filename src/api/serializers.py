@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from accounts.models import CustomUser, Comment
+from accounts.models import Comment, CustomUser
 from catalogue.models import MachineModel, Part
 from core.models import Shop
 
@@ -17,11 +17,9 @@ class ShopSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-
-
 class MachineModelSerializer(serializers.ModelSerializer):
 
-    machine_type = serializers.SerializerMethodField('get_readable_machine_type')
+    machine_type = serializers.SerializerMethodField("get_readable_machine_type")
 
     def get_readable_machine_type(self, model_object):
         readable_machine_type = model_object.get_machine_type_display()
@@ -29,26 +27,31 @@ class MachineModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MachineModel
-        fields = ("id", "model", "machine_type", )
+        fields = (
+            "id",
+            "model",
+            "machine_type",
+        )
 
 
 class MachineModelPartsSerializer(MachineModelSerializer):
 
-    available_parts_by_model = serializers.SerializerMethodField('get_available_parts_by_model')
+    available_parts_by_model = serializers.SerializerMethodField("get_available_parts_by_model")
 
     def get_available_parts_by_model(self, model_object):
         parts = model_object.part.all()
         available_parts_by_model = {}
         for part in parts:
-            available_parts_by_model[part.part_number] = {'part_name': part.part_name,
-                                                          'price': part.price,
-                                                          'remark': part.remark,
-                                                          }
+            available_parts_by_model[part.part_number] = {
+                "part_name": part.part_name,
+                "price": part.price,
+                "remark": part.remark,
+            }
         return available_parts_by_model
 
     class Meta:
         model = MachineModel
-        fields = ('id', 'model', 'machine_type', 'available_parts_by_model')
+        fields = ("id", "model", "machine_type", "available_parts_by_model")
 
 
 class PartSerializer(serializers.ModelSerializer):
@@ -57,14 +60,7 @@ class PartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Part
-        fields = ("part_number", "part_name", "price", "remark", "available_shops",
-                  "related_machine_models")
-
-
-
-
-
-
+        fields = ("part_number", "part_name", "price", "remark", "available_shops", "related_machine_models")
 
     # available_shops = serializers.SerializerMethodField('get_available_shops')
     # related_machine_models = serializers.SerializerMethodField('get_related_machine_models')
