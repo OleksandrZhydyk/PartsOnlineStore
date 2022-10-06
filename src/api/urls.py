@@ -3,7 +3,8 @@ from rest_framework import routers
 
 from api.views import (ModelDeleteView, ModelListCreateView, ModelRetrieveView,
                        ModelUpdateView, PartDeleteView, PartListCreateView,
-                       PartRetrieveView, PartUpdateView, UserViewSet)
+                       PartRetrieveView, PartUpdateView, ProfileUserView,
+                       UserViewSet)
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet)
@@ -11,6 +12,7 @@ router.register("users", UserViewSet)
 urlpatterns = [
     path("auth/", include("rest_framework.urls")),
     path("", include(router.urls)),
+    path("users/<uuid:pk>/profile/", ProfileUserView.as_view()),
     path("part/", PartListCreateView.as_view()),
     path("part/<str:part_number>/", PartRetrieveView.as_view()),
     path("part/<str:part_number>/delete/", PartDeleteView.as_view()),

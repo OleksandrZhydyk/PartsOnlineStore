@@ -77,5 +77,5 @@ class Profile(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
-    part = models.ForeignKey(to="catalogue.Part", on_delete=models.CASCADE)
+    part = models.ForeignKey(to="catalogue.Part", related_name="comment", on_delete=models.CASCADE)
     comment = models.TextField(blank=True, null=True)
