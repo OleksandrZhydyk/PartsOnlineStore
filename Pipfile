@@ -15,12 +15,18 @@ pycodestyle = "==2.9.1"
 pyflakes = "==2.5.0"
 sqlparse = "==0.4.2"
 tomli = "==2.0.1"
+django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
+pillow = "*"
+wheel = "*"
+django-extensions = "*"
+
 
 [dev-packages]
 black = "==22.8.0"
 flake8 = "==5.0.4"
 isort = "==5.10.1"
+pydot = "*"
+graphviz = "*"
 
 [requires]
 python_version = "*"
-

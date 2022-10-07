@@ -31,7 +31,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "phonenumber_field",
+    "django_extensions",
     "core",
+    "accounts",
+    "catalogue",
+    "cart",
 ]
 
 MIDDLEWARE = [
@@ -94,6 +99,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "accounts.CustomUser"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
