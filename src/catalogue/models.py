@@ -23,6 +23,7 @@ class Part(models.Model):
     )
     remark = models.CharField(max_length=255, blank=True, null=True, verbose_name="Remark")
     cart = models.ForeignKey(to=Cart, related_name="part", on_delete=models.SET_NULL, null=True, blank=True)
+    stock_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
 
 
 class MachineModel(models.Model):
