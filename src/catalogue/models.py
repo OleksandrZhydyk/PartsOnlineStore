@@ -22,7 +22,6 @@ class Part(models.Model):
         verbose_name="Image",
     )
     remark = models.CharField(max_length=255, blank=True, null=True, verbose_name="Remark")
-    cart = models.ForeignKey(to=Cart, related_name="part", on_delete=models.SET_NULL, null=True, blank=True)
     stock_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
 
 

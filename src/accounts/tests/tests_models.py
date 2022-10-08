@@ -1,3 +1,4 @@
-from django.test import TestCase  # NOQA
+from django.test import TestCase, Client
 
-# Create your tests here.
+class TestCustomUser(TestCase):
+

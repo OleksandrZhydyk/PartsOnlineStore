@@ -59,12 +59,6 @@ class ModelUpdateView(UpdateAPIView):
     serializer_class = MachineModelSerializer
 
 
-# class ModelRetrieveView(RetrieveAPIView):
-#     queryset = MachineModel.objects.all()
-#     lookup_field = "model"
-#     serializer_class = MachineModelSerializer
-
-
 class ModelRetrieveView(RetrieveAPIView):
     queryset = MachineModel.objects.all()
     lookup_field = "model"
