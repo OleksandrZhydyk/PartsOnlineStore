@@ -1,28 +1,19 @@
-from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError, transaction
 from django.test import TestCase
 
-from cart.models import Cart
 from catalogue.models import MachineModel, Part
 
 
 class TestPartModel(TestCase):
     def setUp(self):
-        self.user = get_user_model().objects.create(email="test@test.com", password="self.user")
-        self.user.save()
-        self.cart = Cart.objects.create(user=self.user)
-        self.cart.save()
-        self.part = Part.objects.create(part_number="RE12345", part_name="test", price=100.99, cart=self.cart)
+        self.part = Part.objects.create(part_number="RE12345", part_name="test", price=100.99)
         self.part.save()
 
     def tearDown(self):
-        self.user.delete()
-        self.cart.delete()
         self.part.delete()
 
     def test_read_part_attrs(self):
-        self.assertTrue(isinstance(self.part.cart, Cart))
         self.assertEqual(self.part.part_number, "RE12345")
         self.assertEqual(self.part.part_name, "test")
         self.assertEqual(self.part.price, 100.99)
@@ -38,9 +29,7 @@ class TestPartModel(TestCase):
 
         with transaction.atomic():
             self.assertRaises(
-                IntegrityError,
-                Part.objects.create,
-                **{"part_number": "RE12345", "part_name": "test", "price": 100.99, "cart": self.cart}
+                IntegrityError, Part.objects.create, **{"part_number": "RE12345", "part_name": "test", "price": 100.99}
             )
 
     def test_part_error(self):
@@ -72,19 +61,13 @@ class TestPartModel(TestCase):
 
 class TestMachineModel(TestCase):
     def setUp(self):
-        self.user = get_user_model().objects.create(email="test@test.com", password="self.user")
-        self.user.save()
-        self.cart = Cart.objects.create(user=self.user)
-        self.cart.save()
-        self.part = Part.objects.create(part_number="test", part_name="test", price=100.99, cart=self.cart)
+        self.part = Part.objects.create(part_number="test", part_name="test", price=100.99)
         self.part.save()
         self.machine_model = MachineModel.objects.create(model="8335R", machine_type=1)
         self.machine_model.part.set((self.part,))
         self.machine_model.save()
 
     def tearDown(self):
-        self.user.delete()
-        self.cart.delete()
         self.part.delete()
         self.machine_model.delete()
 

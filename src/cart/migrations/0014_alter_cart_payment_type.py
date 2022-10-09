@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="cart",
             name="payment_type",
-            field=models.IntegerField(
-                choices=[(1, "GooglePay"), (2, "Visa"), (3, "PayPal")], default=1
-            ),
+            field=models.IntegerField(choices=[(1, "GooglePay"), (2, "Visa"), (3, "PayPal")], default=1),
         ),
     ]
