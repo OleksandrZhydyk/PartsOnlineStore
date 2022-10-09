@@ -20,6 +20,11 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 class CartSerializer(serializers.ModelSerializer):
     cart_item = CartItemSerializer(many=True, read_only=True)
+    payment_type = serializers.SerializerMethodField("get_readable_payment_type")
+
+    def get_readable_payment_type(self, model_object):
+        readable_payment_type = model_object.get_payment_type_display()
+        return readable_payment_type
 
     class Meta:
         model = Cart
@@ -27,11 +32,14 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class OrdersHistorySerializer(serializers.ModelSerializer):
-    cart = CartSerializer()
+    cart = CartSerializer(many=True, read_only=True)
 
     class Meta:
         model = OrdersHistory
-        fields = ("cart",)
+        fields = (
+            "user",
+            "cart",
+        )
 
 
 class CustomUserSerializer(serializers.ModelSerializer):

@@ -15,6 +15,10 @@ class TestCustomUser(TestCase):
         self.admin.set_password("admin_password")
         self.admin.save()
 
+    def tearDown(self) -> None:
+        self.admin.delete()
+        self.user.delete()
+
     def test_user_login_wrong_email(self):
         user_login = self.client.login(email="wrong@email.mail", password="password")
         self.assertFalse(user_login)
@@ -25,9 +29,9 @@ class TestCustomUser(TestCase):
 
     # def test_user_access(self):
     #     self.client.force_login(self.user)
-    #     response = self.client.get(reverse("index"))
+    #     response = self.client.get(reverse("admin"))
     #     self.assertEqual(response, HTTPStatus.OK)
-    #
+
     # def test_admin_access_to_admin_panel(self):
     #     self.client.force_login(self.admin)
     #     response = self.client.get(reverse("admin:index"))
