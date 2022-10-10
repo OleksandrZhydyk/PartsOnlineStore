@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Cart(models.Model):
+
     PAYMENT_TYPES = (
         (1, "GooglePay"),
         (2, "Visa"),
@@ -21,12 +22,12 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField(
         default=1,
     )
-    cart = models.ForeignKey("Cart", on_delete=models.CASCADE)
+    cart = models.ForeignKey("Cart", related_name="cart_item", on_delete=models.CASCADE)
 
     def get_price_by_part(self):
         return self.part.price * self.quantity
 
 
 class OrdersHistory(models.Model):
-    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE)
+    user = models.OneToOneField(to=get_user_model(), related_name="orders_history", on_delete=models.CASCADE)
     cart = models.ForeignKey(to=Cart, related_name="orders_history", on_delete=models.CASCADE)

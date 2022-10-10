@@ -19,7 +19,7 @@ django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
 pillow = "*"
 wheel = "*"
 django-extensions = "*"
-
+djangorestframework = "*"
 
 [dev-packages]
 black = "==22.8.0"
