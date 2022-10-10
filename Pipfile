@@ -20,6 +20,10 @@ pillow = "*"
 wheel = "*"
 django-extensions = "*"
 djangorestframework = "*"
+simplejwt = "*"
+djangorestframework-simplejwt = "*"
+djoser = "*"
+drf-yasg = "*"
 
 [dev-packages]
 black = "==22.8.0"
