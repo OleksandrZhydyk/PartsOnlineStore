@@ -1,7 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from cart.models import Cart
 from catalogue.validators import part_number_validator
 
 

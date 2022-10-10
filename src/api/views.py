@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from accounts.models import CustomUser
+from api.permissions import IsOwnerOrAdmin
 from api.serializers import (CustomUserSerializer, MachineModelSerializer,
                              OrdersHistorySerializer, PartDetailSerializer,
                              PartModelSerializer, PartSerializer,
@@ -22,6 +23,13 @@ class UserViewSet(ModelViewSet):
 
 
 class ProfileUserView(RetrieveAPIView):
+    permission_classes = [IsOwnerOrAdmin]
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+
+
+class ProfileUserUpdateView(UpdateAPIView):
+    permission_classes = [IsOwnerOrAdmin]
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
