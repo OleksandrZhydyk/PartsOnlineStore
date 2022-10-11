@@ -12,9 +12,10 @@ class Cart(models.Model):
 
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
     creation_date = models.DateTimeField(auto_now_add=True)
-    payment_type = models.CharField(max_length=100, choices=PAYMENT_TYPES, default="Visa")
+    payment_type = models.IntegerField(choices=PAYMENT_TYPES, default=1)
     payment_id = models.CharField(max_length=100, null=True)
     ordered = models.BooleanField(default=False)
+    orders_history = models.ForeignKey(to="OrdersHistory", related_name="cart", on_delete=models.CASCADE, null=True)
 
 
 class CartItem(models.Model):
@@ -30,4 +31,3 @@ class CartItem(models.Model):
 
 class OrdersHistory(models.Model):
     user = models.OneToOneField(to=get_user_model(), related_name="orders_history", on_delete=models.CASCADE)
-    cart = models.ForeignKey(to=Cart, related_name="orders_history", on_delete=models.CASCADE)

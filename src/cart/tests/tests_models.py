@@ -12,7 +12,7 @@ class TestCartItemModel(TestCase):
         self.user.save()
         self.cart = Cart.objects.create(user=self.user)
         self.cart.save()
-        self.part = Part.objects.create(part_number="test", part_name="test", price=100.99, cart=self.cart)
+        self.part = Part.objects.create(part_number="test", part_name="test", price=100.99)
         self.part.save()
         self.cart_item = CartItem.objects.create(part=self.part, cart=self.cart, quantity=2)
         self.cart_item.save()
