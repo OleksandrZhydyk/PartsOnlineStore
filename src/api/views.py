@@ -2,7 +2,7 @@ from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      RetrieveUpdateDestroyAPIView,
                                      UpdateAPIView)
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
 from accounts.models import CustomUser
@@ -35,7 +35,6 @@ class ProfileUserUpdateView(UpdateAPIView):
 
 
 class PartListView(ListAPIView):
-    permission_classes = [AllowAny]
     queryset = Part.objects.all()
     serializer_class = PartSerializer
 
@@ -61,14 +60,12 @@ class PartUpdateView(UpdateAPIView):
 
 
 class PartRetrieveView(RetrieveAPIView):
-    permission_classes = [AllowAny]
     queryset = Part.objects.all()
     serializer_class = PartDetailSerializer
     lookup_field = "part_number"
 
 
 class ModelListView(ListAPIView):
-    permission_classes = [AllowAny]
     queryset = MachineModel.objects.all()
     serializer_class = MachineModelSerializer
 
@@ -94,14 +91,12 @@ class ModelUpdateView(UpdateAPIView):
 
 
 class ModelRetrieveView(RetrieveAPIView):
-    permission_classes = [AllowAny]
     queryset = MachineModel.objects.all()
     lookup_field = "model"
     serializer_class = PartModelSerializer
 
 
 class ShopListView(ListAPIView):
-    permission_classes = [AllowAny]
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
 
@@ -113,11 +108,14 @@ class ShopRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
 
 class OrdersHistoryRetrieveView(RetrieveAPIView):
+    permission_classes = [IsOwnerOrAdmin]
     queryset = OrdersHistory.objects.all()
     serializer_class = OrdersHistorySerializer
 
     def get_object(self):
-        return OrdersHistory.objects.get(user__pk=self.kwargs.get("pk"))
+        obj = OrdersHistory.objects.get(user__pk=self.kwargs.get("pk"))
+        self.check_object_permissions(self.request, obj.user)
+        return obj
 
 
 class OrdersHistoryListView(ListAPIView):
