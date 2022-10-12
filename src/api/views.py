@@ -113,6 +113,7 @@ class ShopRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
 
 class OrdersHistoryRetrieveView(RetrieveAPIView):
+    permission_classes = [IsOwnerOrAdmin]
     queryset = OrdersHistory.objects.all()
     serializer_class = OrdersHistorySerializer
 
