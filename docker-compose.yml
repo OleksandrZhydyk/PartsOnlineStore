@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  backend:
+    build: ./
+    container_name: dc_parts_store
+    command:
+      - ./commands/start_server.sh
+    ports:
+      - 8010:8008
+    volumes:
+      - ./src:/parts_online_store/src
+      - ./commands/start_server.sh:/parts_online_store/commands/start_server.sh
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:12
+    container_name: postgres
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data: { }

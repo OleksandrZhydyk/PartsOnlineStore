@@ -1,4 +1,4 @@
-from uuid import uuid4
+import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -12,7 +12,7 @@ from accounts.managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, default=uuid4, unique=True, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("Email address"), null=True, unique=True)
     first_name = models.CharField(_("First name"), max_length=150, blank=True)
     last_name = models.CharField(_("Last name"), max_length=150, blank=True)

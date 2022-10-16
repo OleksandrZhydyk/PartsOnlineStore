@@ -24,6 +24,7 @@ simplejwt = "*"
 djangorestframework-simplejwt = "*"
 djoser = "*"
 drf-yasg = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 black = "==22.8.0"
