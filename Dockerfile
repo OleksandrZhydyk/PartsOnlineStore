@@ -9,12 +9,12 @@ WORKDIR /PartsOnlineStore
 COPY ./src ./src
 #COPY ./requirements.txt ./requirements.txt
 COPY ./Pipfile ./Pipfile
+COPY ./Pipfile.lock ./Pipfile.lock
+COPY ./commands/start_server.sh ./commands/start_server.sh
 
 RUN python -m pip install --upgrade pip
 #RUN pip install -r ./requirements.txt
 RUN pip install pipenv
-RUN pipenv install
-RUN pipenv install --dev
-
-#CMD ["python", "src/manage.py", "runserver", "0:8008"]
-CMD ["pipenv", "run", "python", "src/manage.py", "runserver", "0:8008"]
+RUN pipenv install --system --deploy
+RUN chmod +x ./commands/start_server.sh
+CMD ["./commands/start_server.sh"]
