@@ -1,0 +1,24 @@
+.navbar {
+    background-color: #F6F5D7;
+    margin:0;
+    padding: 0;
+}
+
+.wrapper-image::before {
+  content: "";
+  background-image: url("/static/core/index_background.jpg");
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0.4;
+}
+
+.content {
+    position: relative;
+}
+.shop-locations {
+    margin-top: 100px;
+}
