@@ -25,6 +25,12 @@ djangorestframework-simplejwt = "*"
 djoser = "*"
 drf-yasg = "*"
 psycopg2-binary = "*"
+django-mongodb-engine = {git = "https://github.com/django-nonrel/mongodb-engine"}
+djongo = "*"
+mongoengine = "*"
+faker = "*"
+django-leaflet = "*"
+django-location-field = "*"
 
 [dev-packages]
 black = "==22.8.0"

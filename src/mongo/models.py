@@ -1,5 +1,6 @@
-from mongoengine import Document, EmbeddedDocument, StringField, EmailField, FloatField, ListField, \
-    EmbeddedDocumentField
+from mongoengine import (Document, EmailField, EmbeddedDocument,
+                         EmbeddedDocumentField, FloatField, ListField,
+                         StringField)
 
 
 class Basket(EmbeddedDocument):
@@ -11,4 +12,3 @@ class Customer(Document):
     name = StringField(max_length=255)
     email = EmailField()
     baskets = ListField(EmbeddedDocumentField(Basket))
-

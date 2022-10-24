@@ -27,9 +27,7 @@ class Migration(migrations.Migration):
                 ("address", models.CharField(max_length=255)),
                 (
                     "part",
-                    models.ManyToManyField(
-                        null=True, related_name="shop", to="catalogue.part"
-                    ),
+                    models.ManyToManyField(null=True, related_name="shop", to="catalogue.part"),
                 ),
             ],
         ),

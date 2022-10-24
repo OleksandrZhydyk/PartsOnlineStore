@@ -9,18 +9,18 @@ services:
     ports:
       - 8010:8008
     volumes:
-      - ./src:/parts_online_store/src
-      - ./commands/start_server.sh:/parts_online_store/commands/start_server.sh
+      - ./src:/PartsOnlineStore/src
     env_file:
       - .env
     depends_on:
+      - mongo
       - postgres
 
   postgres:
     image: postgres:12
     container_name: postgres
     ports:
-      - 5432:5432
+      - 5434:5432
     env_file:
       - .env
     volumes:
@@ -38,6 +38,28 @@ services:
     depends_on:
       - postgres
 
+  mongo:
+    image: mongo:4.4.6
+    container_name: mongo_cont
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    env_file:
+      - .env
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    env_file:
+      - .env
+    depends_on:
+      - mongo
+
 volumes:
   pg_data: { }
   pgadmin_data: { }
+  mongo_data: { }

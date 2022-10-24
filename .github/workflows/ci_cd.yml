@@ -47,5 +47,5 @@ jobs:
 
       - name: Run tests
         run: |
-          pipenv run python src/manage.py test
-          pipenv run flake8 --max-line-length=120 --exclude=*/migrations/*
+          pipenv run python src/manage.py test --shuffle
+          pipenv run flake8 --max-line-length=120 --exclude=*/migrations/* --ignore=F405 

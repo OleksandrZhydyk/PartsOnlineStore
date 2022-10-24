@@ -25,9 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-d22wuj)8b(*r&an!jwwu_#9ei5a$ov&swzf9&3ay*-_bu2+*tu"
 
-mongoengine.connect(
-    db='mongo_db', host='mongo', username='root', password='example'
-)
+mongoengine.connect(db="mongo_db", host="mongo", username="root", password="example")
 
 # Application definition
 
@@ -68,7 +66,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR), 'templates'],
+        "DIRS": [os.path.join(BASE_DIR), "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
