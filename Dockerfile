@@ -10,11 +10,14 @@ COPY ./src ./src
 #COPY ./requirements.txt ./requirements.txt
 COPY ./Pipfile ./Pipfile
 COPY ./Pipfile.lock ./Pipfile.lock
-COPY commands/start_server_dev.sh ./commands/start_server.sh
+COPY ./commands ./commands
+
 
 RUN python -m pip install --upgrade pip
 #RUN pip install -r ./requirements.txt
 RUN pip install pipenv
 RUN pipenv install --system --deploy
-RUN chmod +x ./commands/start_server.sh
-CMD ["./commands/start_server.sh"]
+RUN chmod +x ./commands/start_server_prod.sh
+RUN chmod +x ./commands/start_server_dev.sh
+
+CMD ["bash"]

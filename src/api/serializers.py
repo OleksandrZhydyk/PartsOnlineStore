@@ -85,14 +85,7 @@ class PartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Part
-        fields = (
-            "part_number",
-            "part_name",
-            "price",
-            "remark",
-            "shop",
-            "machine_model",
-        )
+        fields = ("part_number", "part_name", "price", "description", "shop", "machine_model", "machine_system")
 
 
 class PartDetailSerializer(PartSerializer):

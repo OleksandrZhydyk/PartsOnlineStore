@@ -13,7 +13,7 @@ class Part(models.Model):
         (5, "Electric"),
         (6, "Electronic"),
         (7, "Chassis"),
-        (8, "Other")
+        (8, "Other"),
     )
 
     part_number = models.CharField(primary_key=True, max_length=50, validators=[part_number_validator])
