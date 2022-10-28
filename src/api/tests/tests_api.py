@@ -27,10 +27,23 @@ class TestAPIViews(TestCase):
 
     def test_user_shops_retrieve(self):
         self.client.force_authenticate(user=self.user)
-        self.shop = Shop.objects.create(address="Kyiv")
+        self.shop = Shop.objects.create(
+            address="вулиця Глінки, 2, Дніпро, Дніпропетровська область, 49000",
+            location="48.4660662,35.051501",
+        )
         response = self.client.get(reverse("shops_list"))
         self.assertEqual(response.status_code, HTTP_200_OK)
-        self.assertEqual(response.data, [{"id": 1, "address": "Kyiv", "part": []}])
+        self.assertEqual(
+            response.data,
+            [
+                {
+                    "id": 1,
+                    "address": "вулиця Глінки, 2, Дніпро, Дніпропетровська область, 49000",
+                    "part": [],
+                    "location": "48.4660662,35.051501",
+                }
+            ],
+        )
 
     def test_user_part_create_access(self):
         self.client.force_authenticate(user=self.user)
