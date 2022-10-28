@@ -1,0 +1,148 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<br>
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="flex-shrink-0 p-3 bg-secondary" style="width: 280px;">
+
+                    <span class="fs-4 fw-semibold text-white">
+                        Filter by
+                        <i class="fa-solid fa-filter"></i>
+                    </span>
+                    <form method="get">
+                        <ul class="list-unstyled ps-0">
+                            <li class="border-top my-3"></li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed fs-5 fw-bold text-white btn-sidebar"
+                                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false"
+                                        type='button'>
+                                    Model
+                                    <i class="fa-solid fa-tractor tractor-icon"></i>
+                                </button>
+                                <div class="collapse show" id="home-collapse" style="">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        {% for model in models%}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{model.model}}"
+                                                   id="checkbox_model" name="machine_model">
+                                            <label class="form-check-label text-white fs-6 fw-bold"
+                                                   for="checkbox_model">
+                                                {{model.model}}
+                                            </label>
+                                        </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed fs-5 fw-bold text-white btn-sidebar"
+                                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                                        aria-expanded="false" type='button'>
+                                    System
+                                    <i class="fa-solid fa-gears gear-icon"></i>
+                                </button>
+
+                                <div class="collapse show" id="dashboard-collapse" style="">
+                                    {% for system in parts%}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{system.machine_system}}" id="checkbox_system"
+                                               name="machine_system">
+                                        <label class="form-check-label text-white fs-6 fw-bold" for="checkbox_system">
+                                            {{system.get_machine_system_display}}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                            <li class="border-top my-3"></li>
+                        </ul>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-success " type="submit">
+                                    Apply filter <i class="fa-solid fa-circle-check"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <a href="{% url 'parts_view' %}">
+                                    <button class="btn btn-warning " type="button">
+                                        Clear all filters <i class="fa-solid fa-arrows-rotate"></i>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="col-9">
+                <p class="fs-1 fw-bolder text-center mb-0"> John Deere parts list</p>
+                <hr/>
+                {% for part in parts %}
+                <div class="row">
+
+                    <div class="col d-flex flex-column justify-content-center">
+                        <a href="{% url 'part_detail' part.part_number%}">
+                            <img src="{{part.image.url}}" alt="part" width="200px" class="me-5">
+                        </a>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center">
+                         <div class="row">
+                             <div class="col">
+                        <p>Part number:</p>
+                        <p>Part name:</p>
+                        <p>Price:</p>
+                             </div>
+                             <div class="col">
+                        <p class="fw-bolder">{{part.part_number}}</p>
+                        <p class="fw-bolder">{{part.part_name}}</p>
+                        <p class="fw-bolder">{{part.price}}</p>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <a href="#">
+                                    <button type="submit" class="btn btn-warning w-100">
+                                        + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row text-center">
+                            <div class="col">
+                                <button class="btn btn-secondary"
+                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+
+                            <div class="col">
+                                <input id="form1" min="0" name="quantity" value="1" type="number"
+                                       class="form-control form-control-xs"/>
+                            </div>
+
+                            <div class="col">
+                                <button class="btn btn-secondary"
+                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

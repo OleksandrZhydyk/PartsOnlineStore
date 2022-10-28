@@ -2,10 +2,12 @@ import os
 
 from config.settings.base import *  # NOQA
 
+CURRENT_ENV = "DEV"
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # INSTALLED_APPS += ...
 
@@ -47,6 +49,10 @@ else:
 STATIC_URL = "/static/"
 STATIC_ROOT = ""
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = 'media/'
 
 
 LOCATION_FIELD = {

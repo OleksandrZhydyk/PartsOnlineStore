@@ -10,7 +10,7 @@ COPY ./src ./src
 #COPY ./requirements.txt ./requirements.txt
 COPY ./Pipfile ./Pipfile
 COPY ./Pipfile.lock ./Pipfile.lock
-COPY ./commands/start_server.sh ./commands/start_server.sh
+COPY commands/start_server_dev.sh ./commands/start_server.sh
 
 RUN python -m pip install --upgrade pip
 #RUN pip install -r ./requirements.txt

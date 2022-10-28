@@ -1,0 +1,93 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<br>
+<div class="content">
+<div class="container">
+
+        <div class="row">
+            <div class="col d-flex flex-column justify-content-center">
+                <img src="{{part.image.url}}" alt="part" width="250px" class="me-5">
+            </div>
+            <div class="col d-flex flex-column justify-content-center">
+                <div class="row">
+                    <div class="col">
+                        <p class="fs-5">Part number:</p>
+                        <p class="fs-5">Part name:</p>
+                        <p class="fs-5">Price:</p>
+                        <p class="fs-5">Machine system:</p>
+                    </div>
+                    <div class="col">
+                        <p class="fs-5 fw-bolder">{{part.part_number}}</p>
+                        <p class="fs-5 fw-bolder">{{part.part_name}}</p>
+                        <p class="fs-5 fw-bolder">{{part.price}}</p>
+                        <p class="fs-5 fw-bolder">{{part.get_machine_system_display}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col d-flex flex-column justify-content-center">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <a href="#">
+                                    <button type="submit" class="btn btn-warning w-100">
+                                        + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <button class="btn btn-secondary"
+                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <input id="form1" min="0" name="quantity" value="1" type="number"
+                                           class="form-control form-control-xs"/>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-secondary"
+                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<br>
+        <div class="row">
+            <div class="col">
+
+                <p class="fw-bolder fs-3">Description </p>
+                <p class="fw-bolder">{{part.description}}</p>
+
+            </div>
+            <div class="col">
+                <p class="fw-bolder fs-3">Shops by part </p>
+                <ul>
+                    {% for shop in shops%}
+                    <li>{{shop.address}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <div>
+            <p class="fw-bolder fs-3">Comments</p>
+            {% for comment in comments%}
+            <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>
+            <p class="fst-italic">{{comment.user}}</p>
+            <p class="fw-bolder fs-5">{{comment.comment}}</p>
+            <hr/>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

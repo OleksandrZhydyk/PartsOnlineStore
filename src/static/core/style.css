@@ -22,3 +22,39 @@
 .shop-locations {
     margin-top: 100px;
 }
+.cart-icon {
+    font-size: 18px;
+}
+
+.add-to-cart {
+    margin: 0 80px;
+}
+
+.nav-cart-icon {
+    font-size: 30px;
+    color: white;
+    margin: 0 30px;
+}
+
+.tractor-icon {
+    color: white;
+    font-size: 25px;
+}
+
+.gear-icon {
+    color: white;
+    font-size: 25px;
+}
+
+.form-check-input:checked {
+    background-color: orange;
+    border-color: orange;
+}
+
+.btn-sidebar:hover {
+    border-color: white;
+}
+
+.btn-cust{
+    background-color: #48cc21;
+}
