@@ -70,15 +70,11 @@ class TestAPIViews(TestCase):
         MachineModel.objects.create(model="6155M")
         self.client.delete(reverse("model_delete", kwargs={"model": "6155M"}))
         response = self.client.get(reverse("models_retrieve"))
-        self.assertEqual(response.data, [{"id": 1, "model": "W660", "machine_type": "Tractor"}])
+        self.assertEqual(response.data, [{"id": response.data[0]["id"], "model": "W660", "machine_type": "Tractor"}])
 
     def test_admin_part_patch(self):
         self.client.force_authenticate(user=self.admin)
-        part_data = {
-            "part_number": "RE789654",
-            "part_name": "shaft",
-            "price": 10,
-        }
+        part_data = {"part_number": "RE789654", "part_name": "shaft", "price": 10, "description": "crankshaft"}
         Part.objects.create(**part_data)
         part_data_updated = {"part_name": "sprocket", "price": 7.5}
         response = self.client.patch(reverse("part_update", kwargs={"part_number": "RE789654"}), part_data_updated)

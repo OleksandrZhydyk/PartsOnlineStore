@@ -5,6 +5,17 @@ from catalogue.validators import part_number_validator
 
 
 class Part(models.Model):
+    MACHINE_SYSTEMS = (
+        (1, "Engine"),
+        (2, "Transmission"),
+        (3, "Hydraulic"),
+        (4, "Steering and brake"),
+        (5, "Electric"),
+        (6, "Electronic"),
+        (7, "Chassis"),
+        (8, "Other"),
+    )
+
     part_number = models.CharField(primary_key=True, max_length=50, validators=[part_number_validator])
     part_name = models.CharField(max_length=125, null=True, verbose_name="Part name")
     price = models.FloatField(
@@ -14,14 +25,15 @@ class Part(models.Model):
     discount_price = models.FloatField(verbose_name="Discount", blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True, editable=False, verbose_name="Part adding date")
     image = models.ImageField(
-        default="profiles_avatars/empty_avatar.png",
+        default="media/part_photos/blank.png",
         null=True,
         blank=True,
-        upload_to="profiles_avatars/%Y/%m/%d/",
+        upload_to="part_photos/%Y/%m/%d/",
         verbose_name="Image",
     )
-    remark = models.CharField(max_length=255, blank=True, null=True, verbose_name="Remark")
+    description = models.TextField(blank=True, null=True, verbose_name="Description")
     stock_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
+    machine_system = models.IntegerField(choices=MACHINE_SYSTEMS, default=1, verbose_name="Machine type")
 
 
 class MachineModel(models.Model):
