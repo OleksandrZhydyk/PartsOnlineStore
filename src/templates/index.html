@@ -13,18 +13,18 @@
 <div class="wrapper-image"></div>
 {% endblock %}
 {% block content %}
-    <div class="container-fluid">
+    <div class="container">
         <div class="content">
             <br/>
             <br/>
             <form style="margin: auto;" method="get" action="parts">
 
-                <div class="row justify-content-center">
-                    <div class="col-md-5 text-center">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-5">
                         <input type="search" class="form-control form-control-lg" name="search"
                                placeholder="Search by part number, part name, machine system">
                     </div>
-                    <div class="col-md-2 text-center">
+                    <div class="col-12 col-md-4">
                         <select class="form-select form-select-lg" aria-label="Default select example" name="field">
                             <option selected value="part_number">by part number</option>
                             <option value="machine_system">by system</option>
@@ -40,43 +40,40 @@
                 </form>
             <br/>
             <br/>
-            <div class="row justify-content-center">
-                <div class="col-4">
-                    <div class="card"  style="width: 28rem; height: 23rem;">
-                        <img src="{% static 'core/ams_deere.jpeg' %}" class="card-img-top"  alt="ams_deere" width="600"
-                             height="400">
-                        <div class="card-body" style="margin: auto;">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="card mb-5">
+                        <img src="{% static 'core/ams_deere.jpeg' %}" class="card-img-top img-fluid img-card"  alt="ams_deere">
+                        <div class="card-body m-auto">
                             <a href="#" class="btn btn-warning stretched-link">AMS attachments</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card" style="width: 28rem; height: 23rem;">
-                        <img src="{% static 'core/engine_overhaul_kit.jpg' %}" class="card-img-top"
-                             alt="engine_overhaul_kit"
-                             width="600" height="400">
-                        <div class="card-body" style="margin: auto;">
+                <div class="col-12 col-md-4">
+                    <div class="card mb-5">
+                        <img src="{% static 'core/engine_overhaul_kit.jpg' %}" class="card-img-top img-fluid img-card"
+                             alt="engine_overhaul_kit">
+                        <div class="card-body m-auto">
                             <a href="#" class="btn btn-warning stretched-link">Engine overhaul kits</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card" style="width: 30rem; height: 23rem;">
-                        <img src="{% static 'core/maintenance_parts.webp' %}" class="card-img-top" alt="maintenance_kit"
-                             width="400" height="300">
-                        <div class="card-body" style="margin: auto;">
+                <div class="col-12 col-md-4">
+                    <div class="card mb-5">
+                        <img src="{% static 'core/maintenance_parts.webp' %}" class="card-img-top img-fluid img-card" alt="maintenance_kit">
+                        <div class="card-body m-auto">
                             <a href="#" class="btn btn-warning stretched-link">Maintenance kits</a>
-                            <p>Do-it-yourself John Deere machines maintenance made easy. All the exact parts you need to ensure your machine keeps running efficiently.</p>
+<!--                            <p>Do-it-yourself John Deere machines maintenance made easy. All the exact parts you need to ensure your machine keeps running efficiently.</p>-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 
 
     <div class="row shop-locations">
-        <div class="col-4 ps-4">
+        <div class="d-none d-lg-block col-lg-4">
             <h3 class="text-center">Our locations:</h3>
             <ul>
             {% for address in addresses %}
@@ -84,11 +81,12 @@
             {% endfor %}
             </ul>
         </div>
-        <div class="col-8">
- <div id="map" class="map"></div>
+        <div class="col-12 col-lg-8">
+            <div id="map" class="map"></div>
         </div>
     </div>
 
+ </div>
     <script type="text/javascript">
         function initMap() {
 
