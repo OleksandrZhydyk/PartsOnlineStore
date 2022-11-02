@@ -32,6 +32,8 @@ faker = "*"
 django-leaflet = "*"
 django-location-field = "*"
 webargs = "*"
+celery = "*"
+redis = "*"
 
 [dev-packages]
 black = "==22.8.0"

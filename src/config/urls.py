@@ -11,6 +11,6 @@ urlpatterns = [
     path("mongo/", include("mongo.urls")),
 ]
 
-if settings.dev.DEBUG:
-    urlpatterns += static(settings.dev.MEDIA_URL, document_root=settings.dev.MEDIA_ROOT)
-    urlpatterns += static(settings.dev.STATIC_URL, document_root=settings.dev.STATIC_ROOT)
+# if settings.dev.DEBUG:
+#     urlpatterns += static(settings.dev.MEDIA_URL, document_root=settings.dev.MEDIA_ROOT)
+#     urlpatterns += static(settings.dev.STATIC_URL, document_root=settings.dev.STATIC_ROOT)

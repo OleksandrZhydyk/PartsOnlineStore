@@ -75,6 +75,28 @@ services:
     depends_on:
       - backend
 
+  celery:
+    build: ./
+    command:
+      - ./commands/start_celery.sh
+    restart: always
+    volumes:
+      - ./src:/PartsOnlineStore/src
+#      - ./commands/start_celery.sh:/PartsOnlineStore/commands/start_celery.sh
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - backend
+
+  redis:
+    image: redis
+    env_file:
+      - .env
+    restart: on-failure
+    depends_on:
+      - backend
+
 volumes:
   pg_data: { }
   pgadmin_data: { }
