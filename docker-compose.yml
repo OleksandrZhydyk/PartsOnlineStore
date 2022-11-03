@@ -79,10 +79,10 @@ services:
     build: ./
     command:
       - ./commands/start_celery.sh
-    restart: always
+    restart: on-failure
     volumes:
-      - ./src:/PartsOnlineStore/src
-#      - ./commands/start_celery.sh:/PartsOnlineStore/commands/start_celery.sh
+      - ./src:/PartsOnlineStore
+      - ./commands:/PartsOnlineStore/commands
     env_file:
       - .env
     depends_on:

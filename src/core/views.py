@@ -1,3 +1,6 @@
+import random
+from faker import Faker
+
 from django.shortcuts import render
 
 from accounts.models import Comment
@@ -66,3 +69,44 @@ def get_part_detail(request, **kwargs):
 # return HttpResponseRedirect(reverse("parts"))
 
 # return render(request, template_name="students_create.html", context={"response": response})
+#
+#
+# from PIL import Image, ImageDraw, ImageFont
+#
+# width = 512
+# height = 512
+# message = "Hello boss!"
+# img = Image.new('RGB', (width, height), color='blue')
+#
+# imgDraw = ImageDraw.Draw(img)
+#
+# imgDraw.text((10, 10), message, fill=(255, 255, 0))
+#
+# img.save('result.png')
+
+# def generate_shops(cls, count=1):
+#     faker = Faker("uk_UA")
+#     for _ in range(count):
+#         cls.objects.create(
+#             address=faker.address(),
+#             part=[]
+#         )
+
+# def gen_part_number():
+#     prefix = ["AL", "R", "RE", "AX", "AH", "AXE"]
+#     return prefix[random.randint(0, 5)]+str(random.randint(1000, 100000))
+#
+# def generate_parts(cls, count=1):
+#
+#     for _ in range(count):
+#         cls.objects.create(
+#             part_number=gen_part_number(),
+#             part_name=
+#             price=random.uniform(5, 500),
+#             discount_price=random.uniform(0, 0.9),
+#             image=
+#             description=
+#             stock_quantity=random.randint(1, 100),
+#             machine_system=random.randint(1, 8),
+#         )
+
