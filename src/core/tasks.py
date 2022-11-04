@@ -11,7 +11,7 @@ def create_shops(count=1):
 
     for _ in range(count):
         address = faker.address()
-        location = ",".join(faker.local_latlng(country_code='UA')[0:2])
+        location = ",".join(faker.local_latlng(country_code="UA")[0:2])
         shop = Shop.objects.create(
             address=address,
             location=location,

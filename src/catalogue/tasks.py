@@ -4,7 +4,7 @@ from celery import shared_task
 from faker import Faker
 from PIL import Image, ImageDraw, ImageFont
 
-from catalogue.models import Part, MachineModel
+from catalogue.models import MachineModel, Part
 
 
 def get_part_pic(pic_name):
@@ -12,7 +12,7 @@ def get_part_pic(pic_name):
     height = 300
     font = ImageFont.truetype("catalogue/arial.ttf", size=60)
 
-    img = Image.new('RGB', (width, height), color='grey')
+    img = Image.new("RGB", (width, height), color="grey")
 
     imgDraw = ImageDraw.Draw(img)
 
@@ -22,14 +22,14 @@ def get_part_pic(pic_name):
 
     imgDraw.text((xText, yText), pic_name, font=font, fill=(255, 255, 0))
 
-    img.save(f'media/generated_part_pic/{pic_name}.png')
+    img.save(f"media/generated_part_pic/{pic_name}.png")
 
-    return f'generated_part_pic/{pic_name}.png'
+    return f"generated_part_pic/{pic_name}.png"
 
 
 def get_part_number():
     prefix = ["AL", "R", "RE", "AX", "AH", "AXE"]
-    return prefix[random.randint(0, 5)]+str(random.randint(1000, 99999))
+    return prefix[random.randint(0, 5)] + str(random.randint(1000, 99999))
 
 
 @shared_task
@@ -56,16 +56,16 @@ def get_machine_model(machine_type):
     self_propelled_sprayer_prefix = ["R", "M"]
     loaders = ["KT315-24", "KT315-26", "KT315-28", "KT315-36", "KT315-38"]
     match machine_type:
-       case 1:
-           return str(random.randint(100, 999)) + tractor_suffix[random.randint(0, 3)]
-       case 2:
-           return combine_prefix[random.randint(0, 2)] + str(random.randint(600, 695))
-       case 3:
-           return self_propelled_sprayer_prefix[random.randint(0, 1)] + str(random.randint(4030, 4045))
-       case 4:
-           return str(random.randint(7600, 8600))
-       case 5:
-           return loaders[random.randint(0, 4)]
+        case 1:
+            return str(random.randint(100, 999)) + tractor_suffix[random.randint(0, 3)]
+        case 2:
+            return combine_prefix[random.randint(0, 2)] + str(random.randint(600, 695))
+        case 3:
+            return self_propelled_sprayer_prefix[random.randint(0, 1)] + str(random.randint(4030, 4045))
+        case 4:
+            return str(random.randint(7600, 8600))
+        case 5:
+            return loaders[random.randint(0, 4)]
 
 
 @shared_task

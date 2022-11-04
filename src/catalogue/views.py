@@ -1,9 +1,9 @@
 from django.shortcuts import render
 
 from accounts.models import Comment
-from catalogue.models import Part, MachineModel
+from catalogue.models import MachineModel, Part
+from catalogue.tasks import create_machine_model, create_part
 from core.models import Shop
-from catalogue.tasks import create_part, create_machine_model
 
 
 def generate_parts(request, **kwargs):

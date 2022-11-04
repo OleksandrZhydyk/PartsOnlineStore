@@ -35,7 +35,6 @@ def generate_shops(request, **kwargs):
     )
 
 
-
 # def add_to_cart(request, **kwargs):
 #     print(kwargs)
 #     CartItem.objects.create(part=kwargs.get('part_number'), quantity=kwargs.get('quantity')),
@@ -44,4 +43,3 @@ def generate_shops(request, **kwargs):
 
 # return render(request, template_name="students_create.html", context={"response": response})
 #
-
