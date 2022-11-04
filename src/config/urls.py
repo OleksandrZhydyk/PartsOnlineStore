@@ -8,7 +8,9 @@ urlpatterns = [
     path("", include("core.urls")),
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
+    path("catalogue/", include("catalogue.urls")),
     path("mongo/", include("mongo.urls")),
+    path("user/", include("accounts.urls"))
 ]
 
 if settings.dev.DEBUG:

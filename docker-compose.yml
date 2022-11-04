@@ -11,6 +11,7 @@ services:
     volumes:
       - static_content:/PartsOnlineStore/src/static/
       - media_content:/PartsOnlineStore/src/media/
+      - ./src/media/generated_part_pic:/PartsOnlineStore/src/media/generated_part_pic
       - ./src:/PartsOnlineStore/src
     env_file:
       - .env
@@ -96,6 +97,29 @@ services:
     restart: on-failure
     depends_on:
       - backend
+
+  flower:
+      build: ./
+      volumes:
+        - ./src:/PartsOnlineStore
+      env_file:
+        - .env
+      command: celery -A config flower --broker=redis://redis
+      ports:
+        - 5556:5555
+      depends_on:
+        - celery
+        - redis
+
+  redisadmin:
+    container_name: redisadmin
+    image: rediscommander/redis-commander:latest
+    hostname: redisadmin
+    restart: always
+    ports:
+      - 8092:8081
+    env_file:
+      - .env
 
 volumes:
   pg_data: { }
