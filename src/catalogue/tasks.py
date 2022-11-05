@@ -55,17 +55,16 @@ def get_machine_model(machine_type):
     tractor_suffix = ["B", "D", "R", "M"]
     self_propelled_sprayer_prefix = ["R", "M"]
     loaders = ["KT315-24", "KT315-26", "KT315-28", "KT315-36", "KT315-38"]
-    match machine_type:
-        case 1:
-            return str(random.randint(100, 999)) + tractor_suffix[random.randint(0, 3)]
-        case 2:
-            return combine_prefix[random.randint(0, 2)] + str(random.randint(600, 695))
-        case 3:
-            return self_propelled_sprayer_prefix[random.randint(0, 1)] + str(random.randint(4030, 4045))
-        case 4:
-            return str(random.randint(7600, 8600))
-        case 5:
-            return loaders[random.randint(0, 4)]
+    if machine_type == 1:
+        return str(random.randint(100, 999)) + tractor_suffix[random.randint(0, 3)]
+    elif machine_type == 2:
+        return combine_prefix[random.randint(0, 2)] + str(random.randint(600, 695))
+    elif machine_type == 3:
+        return self_propelled_sprayer_prefix[random.randint(0, 1)] + str(random.randint(4030, 4045))
+    elif machine_type == 4:
+        return str(random.randint(7600, 8600))
+    else:
+        return loaders[random.randint(0, 4)]
 
 
 @shared_task
