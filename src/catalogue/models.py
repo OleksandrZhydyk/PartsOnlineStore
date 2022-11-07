@@ -25,7 +25,7 @@ class Part(models.Model):
     discount_price = models.FloatField(verbose_name="Discount", blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True, editable=False, verbose_name="Part adding date")
     image = models.ImageField(
-        default="media/part_photos/blank.png",
+        default="media/part_photos/empty_part_image.png",
         null=True,
         blank=True,
         upload_to="part_photos/%Y/%m/%d/",

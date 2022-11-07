@@ -14,5 +14,6 @@ urlpatterns = [
 ]
 
 if settings.dev.DEBUG:
+    urlpatterns += path('__debug__/', include('debug_toolbar.urls')),
     urlpatterns += static(settings.dev.MEDIA_URL, document_root=settings.dev.MEDIA_ROOT)
     urlpatterns += static(settings.dev.STATIC_URL, document_root=settings.dev.STATIC_ROOT)

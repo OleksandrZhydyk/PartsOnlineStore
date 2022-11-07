@@ -11,6 +11,10 @@ ALLOWED_HOSTS = ["127.0.0.1"]
 
 # INSTALLED_APPS += ...
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
 if os.environ.get("GITHUB_WORKFLOW"):
     DATABASES = {
         "default": {
@@ -46,7 +50,7 @@ else:
         },
     }
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 STATIC_ROOT = ""
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 

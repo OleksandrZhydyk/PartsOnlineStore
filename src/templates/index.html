@@ -17,17 +17,18 @@
         <div class="content">
             <br/>
             <br/>
-            <form style="margin: auto;" method="get" action="parts">
+            <form style="margin: auto;" method="get" action="catalogue/parts">
 
                 <div class="row d-flex justify-content-center">
                     <div class="col-12 col-md-5">
+
                         <input type="search" class="form-control form-control-lg" name="search"
-                               placeholder="Search by part number, part name, machine system">
+                               placeholder="Search by part number, part name, machine model">
                     </div>
                     <div class="col-12 col-md-4">
                         <select class="form-select form-select-lg" aria-label="Default select example" name="field">
                             <option selected value="part_number">by part number</option>
-                            <option value="machine_system">by system</option>
+                            <option value="machine_model">by model</option>
                             <option value="part_name">by part name</option>
                         </select>
                     </div>
@@ -35,7 +36,9 @@
 
             <br/>
             <div class=" d-md-flex justify-content-center">
-                    <button type="submit" class="btn btn-warning fs-5 me-md-4 btn-lg">Search</button>
+                    <button type="submit" class="btn btn-warning fs-5 me-md-4 btn-lg">Search
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
             </div>
                 </form>
             <br/>

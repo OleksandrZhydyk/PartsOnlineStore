@@ -18,12 +18,15 @@ dataclasses==0.6
 defusedxml==0.7.1
 Deprecated==1.2.13
 Django==4.1.1
+django-celery-beat==2.4.0
+django-debug-toolbar==3.7.0
 django-extensions==3.2.1
 django-leaflet==0.28.3
 django-location-field==2.1.0
 django-mongodb-engine @ git+https://github.com/django-nonrel/mongodb-engine@1314786975d3d17fb1a2e870dfba004158a5e431
 django-phonenumber-field==7.0.0
 django-templated-mail==1.1.1
+django-timezone-field==5.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==4.8.0
 djangotoolbox==1.8.0
@@ -50,7 +53,7 @@ mypy-extensions==0.4.3
 oauthlib==3.2.2
 packaging==21.3
 pathspec==0.10.1
-phonenumberslite==8.12.57
+phonenumberslite==8.13.0
 Pillow==9.3.0
 platformdirs==2.5.2
 prometheus-client==0.15.0
@@ -63,6 +66,7 @@ pyflakes==2.5.0
 PyJWT==2.6.0
 pymongo==4.3.2
 pyparsing==3.0.9
+python-crontab==2.6.0
 python-dateutil==2.8.2
 python3-openid==3.2.0
 pytz==2022.6
@@ -79,6 +83,7 @@ sqlparse==0.4.2
 tomli==2.0.1
 tornado==6.2
 typing==3.7.4.3
+tzdata==2022.6
 uritemplate==4.1.1
 urllib3==1.26.12
 vine==5.0.0

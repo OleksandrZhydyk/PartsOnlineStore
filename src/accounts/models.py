@@ -59,16 +59,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, primary_key=True)
+    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, primary_key=True,
+                                related_name="profile")
     phone_number = PhoneNumberField(_("Phone number"), blank=True, null=True, help_text="Contact phone number")
     date_created = models.DateTimeField(auto_now=True, null=True, editable=False, verbose_name="Modified date")
     photo = models.ImageField(
-        default="profiles_avatars/empty_avatar.png",
+        default="/empty_avatar.png",
         null=True,
         blank=True,
         upload_to="profiles_avatars/%Y/%m/%d/",
         verbose_name="Avatar",
     )
+    email = models.EmailField(_("Email address"), null=True, unique=True)
+    first_name = models.CharField(_("First name"), max_length=150, blank=True)
+    last_name = models.CharField(_("Last name"), max_length=150, blank=True)
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name="Address")
 
     def __str__(self):

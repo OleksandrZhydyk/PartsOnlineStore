@@ -35,14 +35,23 @@ def get_parts_view(request):
     if "search" in request.GET:
         field = request.GET.get("field")
         search = request.GET.get("search")
-        parts = parts.filter(**{f"{field}__icontains": f"{search}"})
+        if field == "machine_model":
+            parts = parts.filter(**{f"{field}__model__icontains": f"{search}"})
+        else:
+            parts = parts.filter(**{f"{field}__icontains": f"{search}"})
 
     if "machine_model" in request.GET:
         value_list = request.GET.getlist("machine_model")
         parts = parts.filter(machine_model__model__in=value_list).distinct()
+
     if "machine_system" in request.GET:
         value_list = request.GET.getlist("machine_system")
         parts = parts.filter(machine_system__in=value_list).distinct()
+
+    if "part_name" in request.GET:
+        part_name = request.GET['part_name']
+        parts = parts.filter(part_name=part_name)
+
     models = models.filter(part__in=parts).distinct()
     machine_systems = parts.distinct("machine_system")
     return render(

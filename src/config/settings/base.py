@@ -16,6 +16,8 @@ from pathlib import Path
 import mongoengine
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from celery.schedules import crontab
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
@@ -30,12 +32,14 @@ mongoengine.connect(db="mongo_db", host="mongo", username="root", password="exam
 # Application definition
 
 INSTALLED_APPS = [
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "debug_toolbar",
     "phonenumber_field",
     "rest_framework",
     "rest_framework_simplejwt",
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     "djoser",
     "drf_yasg",
     "location_field.apps.DefaultConfig",
+    "django_celery_beat",
     "api",
     "core",
     "accounts",
@@ -52,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -59,6 +65,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -170,8 +177,17 @@ LOCATION_FIELD = {
 GOOGLE_MAPS_API_KEY = "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE"
 
 CELERY_BROKER_URL = "redis://redis"
-CELERY_RESULT_BACKEND = "redis://redis"
+RESULT_BACKEND = "redis://redis"
+ACCEPT_CONTENT = ["application/json"]
+RESULT_SERIALIZER = "json"
+TASK_SERIALIZER = "json"
 
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TASK_SERIALIZER = "json"
+CELERY_BEAT_SCHEDULE = {
+    "create_part_task": {
+        "task": "catalogue.tasks.create_part",
+        "schedule": crontab(minute="*/30")
+    }
+}
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'login'

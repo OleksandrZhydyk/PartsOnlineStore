@@ -11,7 +11,6 @@ def index_view(request):
     for index, location in enumerate(shops_location):
         coordinates.append({})
         coordinates[index]["latitude"], coordinates[index]["longitude"] = location[0].split(",")
-        print(coordinates[index]["latitude"])
     return render(
         request,
         template_name="index.html",

@@ -35,6 +35,8 @@ webargs = "*"
 celery = "*"
 redis = "*"
 flower = "*"
+django-debug-toolbar = "*"
+django-celery-beat = "*"
 
 [dev-packages]
 black = "==22.8.0"
