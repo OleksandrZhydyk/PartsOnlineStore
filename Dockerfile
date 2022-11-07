@@ -17,7 +17,5 @@ RUN python -m pip install --upgrade pip
 #RUN pip install -r ./requirements.txt
 RUN pip install pipenv
 RUN pipenv install --system --deploy
-RUN chmod +x ./commands/start_server_prod.sh
-RUN chmod +x ./commands/start_server_dev.sh
 
 CMD ["bash"]
