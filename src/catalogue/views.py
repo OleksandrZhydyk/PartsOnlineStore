@@ -49,7 +49,7 @@ def get_parts_view(request):
         parts = parts.filter(machine_system__in=value_list).distinct()
 
     if "part_name" in request.GET:
-        part_name = request.GET['part_name']
+        part_name = request.GET["part_name"]
         parts = parts.filter(part_name=part_name)
 
     models = models.filter(part__in=parts).distinct()
@@ -64,7 +64,7 @@ def get_parts_view(request):
 def get_part_detail(request, **kwargs):
     part = Part.objects.get(part_number=kwargs.get("part_number"))
     shops = Shop.objects.filter(part=kwargs.get("part_number"))
-    comments = Comment.objects.filter(part=kwargs.get("part_number"))
+    comments = Comment.objects.filter(part=kwargs.get("part_number")).order_by("-created")
     return render(
         request,
         template_name="catalogue/part_detail.html",

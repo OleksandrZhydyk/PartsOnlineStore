@@ -4,8 +4,7 @@
 {% block content %}
 <br>
 <div class="content">
-<div class="container">
-
+    <div class="container">
         <div class="row">
             <div class="col d-flex flex-column justify-content-center">
                 <img src="{{part.image.url}}" alt="part" width="250px" class="me-5">
@@ -60,16 +59,14 @@
                 </div>
             </div>
         </div>
-<br>
+        <br>
         <div class="row">
             <div class="col">
-
                 <p class="fw-bolder fs-3">Description </p>
                 <p class="fw-bolder">{{part.description}}</p>
-
             </div>
             <div class="col">
-                <p class="fw-bolder fs-3">Shops by part </p>
+                <p class="fw-bolder fs-3">Available at stores</p>
                 <ul>
                     {% for shop in shops%}
                     <li>{{shop.address}}</li>
@@ -78,12 +75,25 @@
             </div>
         </div>
 
-        <div>
-            <p class="fw-bolder fs-3">Comments</p>
+        <button class="btn btn-toggle align-items-center rounded collapsed fs-3 fw-bold text-dark "
+                data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                aria-expanded="false" type='button'>
+            Reviews
+            <i class="fa-solid fa-arrow-down-short-wide"></i>
+        </button>
+
+        <div class="collapse" id="dashboard-collapse" style="">
+<a href="{% url 'create_comment' user.pk part.part_number %}">
+            <button type="button" class="btn btn-success">
+                Leave comment
+                <i class="fa-solid fa-pen"></i></button>
+    </a>
+            <hr/>
             {% for comment in comments%}
             <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>
-            <p class="fst-italic">{{comment.user}}</p>
-            <p class="fw-bolder fs-5">{{comment.comment}}</p>
+            <p>{{comment.created}}</p>
+            <p class=" fw-bolder fst-italic">{{comment.user}}</p>
+            <p class=" fs-5">{{comment.comment}}</p>
             <hr/>
             {% endfor %}
         </div>

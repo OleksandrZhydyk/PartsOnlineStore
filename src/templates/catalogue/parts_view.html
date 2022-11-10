@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-12 col-lg-3">
                 <div class="flex-shrink-0 p-3 bg-secondary">
-                    <form style="margin: auto;" method="get" action="catalogue/parts">
+                    <form style="margin: auto;" method="get" action="/catalogue/parts">
                         <label for="select-form" class="fs-4 fw-bold text-white">Choose category:</label>
                         <select class="form-select form-select-lg mb-2" aria-label="Default select example"
                                 name="field" id="select-form">
@@ -100,7 +100,6 @@
             </div>
 
             <div class="col-lg-9">
-                <p class="fs-1 fw-bolder text-center mb-0"> John Deere parts list</p>
                 <hr/>
                 {% for part in parts %}
                 <div class="row">

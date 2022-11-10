@@ -14,7 +14,6 @@ from datetime import timedelta
 from pathlib import Path
 
 import mongoengine
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from celery.schedules import crontab
 
@@ -32,7 +31,6 @@ mongoengine.connect(db="mongo_db", host="mongo", username="root", password="exam
 # Application definition
 
 INSTALLED_APPS = [
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -65,7 +63,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -183,11 +180,8 @@ RESULT_SERIALIZER = "json"
 TASK_SERIALIZER = "json"
 
 CELERY_BEAT_SCHEDULE = {
-    "create_part_task": {
-        "task": "catalogue.tasks.create_part",
-        "schedule": crontab(minute="*/30")
-    }
+    "create_part_task": {"task": "catalogue.tasks.create_part", "schedule": crontab(minute="*/30")}
 }
 
-LOGIN_REDIRECT_URL = 'index'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "login"

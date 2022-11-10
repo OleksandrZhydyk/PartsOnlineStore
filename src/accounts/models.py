@@ -45,20 +45,21 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         Return the first_name plus the last_name, with a space in between.
         """
-        full_name = "%s %s" % (self.first_name, self.last_name)
+        full_name = "%s %s" % (self.email)
         return full_name.strip()
 
     def get_short_name(self):
         """Return the short name for the user."""
-        return self.first_name
+        return self.email
 
     def __str__(self):
         return str(self.email)
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(to=get_user_model(), on_delete=models.CASCADE, primary_key=True,
-                                related_name="profile")
+    user = models.OneToOneField(
+        to=get_user_model(), on_delete=models.CASCADE, primary_key=True, related_name="profile"
+    )
     phone_number = PhoneNumberField(_("Phone number"), blank=True, null=True, help_text="Contact phone number")
     date_created = models.DateTimeField(auto_now=True, null=True, editable=False, verbose_name="Modified date")
     photo = models.ImageField(
@@ -81,3 +82,4 @@ class Comment(models.Model):
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
     part = models.ForeignKey(to="catalogue.Part", related_name="comment", on_delete=models.CASCADE)
     comment = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
