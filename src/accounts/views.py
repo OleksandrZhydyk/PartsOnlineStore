@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
@@ -33,12 +32,11 @@ def create_comment(request, **kwargs):
 
     if request.method == "POST":
         part = Part.objects.get(part_number=kwargs.get("part_number"))
-        user = get_user_model().objects.get(pk=kwargs.get("pk"))
         form = CommentForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
             obj.part = part
-            obj.user = user
+            obj.user = request.user
             obj.save()
             return HttpResponseRedirect(reverse("part_detail", args=(part.part_number,)))
     else:
