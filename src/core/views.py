@@ -1,4 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 from config import settings
 from core.models import Shop
@@ -13,7 +15,7 @@ def index_view(request):
         coordinates[index]["latitude"], coordinates[index]["longitude"] = location[0].split(",")
     return render(
         request,
-        template_name="index.html",
+        template_name="core/index.html",
         context={
             "title": "Main page",
             "data": coordinates,
@@ -32,6 +34,16 @@ def generate_shops(request, **kwargs):
         template_name="catalogue/generate_data.html",
         context={"title": "Generate part", "message": message},
     )
+
+
+class PageNotFound(TemplateView):
+    template_name = "core/404.html"
+    extra_context = {"title": "Page not found"}
+
+
+class Forbidden(TemplateView):
+    template_name = "core/forbidden.html"
+    extra_context = {"title": "Forbidden"}
 
 
 # def add_to_cart(request, **kwargs):

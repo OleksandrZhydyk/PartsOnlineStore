@@ -90,14 +90,12 @@
 
 
         <div class="collapse" id="dashboard-collapse" style="">
-            {% if user.is_authenticated%}
             <a href="{% url 'create_comment' part.part_number %}">
                 <button type="button" class="btn btn-success mt-3">
                     Leave comment
                     <i class="fa-solid fa-pen"></i>
                 </button>
             </a>
-            {% endif %}
             <hr/>
             {% for comment in comments%}
             <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>

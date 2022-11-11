@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
@@ -28,8 +29,8 @@ class UserProfile(LoginRequiredMixin, UpdateView):
     raise_exception = True
 
 
+@login_required
 def create_comment(request, **kwargs):
-
     if request.method == "POST":
         part = Part.objects.get(part_number=kwargs.get("part_number"))
         form = CommentForm(request.POST)

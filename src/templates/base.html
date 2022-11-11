@@ -68,7 +68,7 @@
                             <li><a class="dropdown-item" href="{% url 'login'%}">Login</a></li>
                             <li><a class="dropdown-item" href="#">Sign in</a></li>
                             {% else %}
-                            <li><a class="dropdown-item" href="{% url 'user_profile'%}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'user_profile' user.pk %}">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

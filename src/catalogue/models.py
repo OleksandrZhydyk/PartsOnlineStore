@@ -14,6 +14,7 @@ class Part(models.Model):
         (6, "Electronic"),
         (7, "Chassis"),
         (8, "Other"),
+        (9, "Cab"),
     )
 
     part_number = models.CharField(primary_key=True, max_length=50, validators=[part_number_validator])
