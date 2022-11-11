@@ -1,5 +1,5 @@
 from django.shortcuts import render
-# from django.views.generic import TemplateView
+from django.views.generic import TemplateView
 
 from config import settings
 from core.models import Shop
@@ -23,6 +23,15 @@ def index_view(request):
         },
     )
 
+
+class PageNotFound(TemplateView):
+    template_name = "core/404.html"
+    extra_context = {"title": "Page not found"}
+
+
+class Forbidden(TemplateView):
+    template_name = "core/forbidden.html"
+    extra_context = {"title": "Forbidden"}
 
 def generate_shops(request, **kwargs):
     count = kwargs.get("count")
