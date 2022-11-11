@@ -33,6 +33,7 @@ class Forbidden(TemplateView):
     template_name = "core/forbidden.html"
     extra_context = {"title": "Forbidden"}
 
+
 def generate_shops(request, **kwargs):
     count = kwargs.get("count")
     create_shops.delay(count)
