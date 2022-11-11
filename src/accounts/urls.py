@@ -1,6 +1,6 @@
 from django.urls import path
 
-from accounts.views import (LoginUser, LogoutUser, UserProfile, create_comment,
+from accounts.views import (
                             generate_user)
 
 urlpatterns = [

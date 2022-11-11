@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from config import settings
-from core.views import PageNotFound, Forbidden
+# from core.views import PageNotFound, Forbidden
 
 urlpatterns = [
     path("", include("core.urls")),
