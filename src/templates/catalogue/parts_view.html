@@ -119,7 +119,7 @@
                                 <p>Price:</p>
                             </div>
                             <div class="col">
-                                <p class="fw-bolder">{{part.part_number}}</p>
+                                    <p class="fw-bolder">{{part.part_number}}</p>
                                 <p class="fw-bolder">{{part.part_name}}</p>
                                 <p class="fw-bolder">{{part.price}}</p>
                             </div>
@@ -127,10 +127,11 @@
                     </div>
 
                     <div class="col d-flex flex-column justify-content-center">
+                        <form method="get" action="{% url 'add_to_cart' part.part_number %}">
                         <div class="row">
                             <div class="col mb-3">
                                 {% if part.stock_quantity == 0 %}
-                                    <button type="submit" class="btn btn-secondary w-100">
+                                    <button type="button" class="btn btn-secondary w-100">
                                         + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
                                     </button>
                                 {% else %}
@@ -145,25 +146,26 @@
 
                         <div class="row text-center">
                             <div class="col">
-                                <button class="btn btn-secondary"
+                                <button class="btn btn-secondary "type="button"
                                         onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
                                     <i class="fas fa-minus"></i>
                                 </button>
                             </div>
 
                             <div class="col">
-                                <input id="form1" min="0" name="quantity" value="1" type="number"
+                                <input id="form1" min="1" name="quantity" value="1" type="number"
                                        class="form-control form-control-xs"/>
                             </div>
 
                             <div class="col">
-                                <button class="btn btn-secondary"
+                                <button class="btn btn-secondary" type="button"
                                         onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
 
                         </div>
+                        </form>
                         {% if part.stock_quantity == 0 %}
                         <div class="badge bg-secondary text-wrap mt-3" style="width: 6rem;">unavailable</div>
                         {% elif part.stock_quantity <= 5 %}

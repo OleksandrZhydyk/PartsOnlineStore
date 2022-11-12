@@ -62,11 +62,13 @@ def get_parts_view(request):
 
 
 def get_part_detail(request, **kwargs):
-    part = Part.objects.get(part_number=kwargs.get("part_number"))
-    shops = Shop.objects.filter(part=kwargs.get("part_number"))
-    comments = Comment.objects.filter(part=kwargs.get("part_number")).order_by("-created")
+    part_number = kwargs.get("part_number")
+    part = Part.objects.get(part_number=part_number)
+    shops = Shop.objects.filter(part=part_number)
+    comments = Comment.objects.filter(part=part_number).order_by("-created")
     return render(
         request,
         template_name="catalogue/part_detail.html",
-        context={"title": "Part detail", "part": part, "shops": shops, "comments": comments},
+        context={"title": "Part detail", "part": part,
+                 "shops": shops, "comments": comments},
     )

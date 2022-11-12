@@ -36,6 +36,8 @@ class Part(models.Model):
     stock_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
     machine_system = models.IntegerField(choices=MACHINE_SYSTEMS, default=1, verbose_name="Machine type")
 
+    # def __str__(self):
+    #     return self.part_number
 
 class MachineModel(models.Model):
     MACHINE_TYPES = (

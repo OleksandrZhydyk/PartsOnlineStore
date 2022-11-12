@@ -12,6 +12,7 @@ urlpatterns = [
     path("catalogue/", include("catalogue.urls")),
     path("mongo/", include("mongo.urls")),
     path("user/", include("accounts.urls")),
+    path("cart/", include("cart.urls")),
 ]
 
 if settings.dev.DEBUG:

@@ -10,12 +10,12 @@ class Cart(models.Model):
         (3, "PayPal"),
     )
 
-    user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(to=get_user_model(), on_delete=models.SET_NULL, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     payment_type = models.IntegerField(choices=PAYMENT_TYPES, default=1)
-    payment_id = models.CharField(max_length=100, null=True)
+    payment_id = models.CharField(max_length=100, null=True, default="")
     ordered = models.BooleanField(default=False)
-    orders_history = models.ForeignKey(to="OrdersHistory", related_name="cart", on_delete=models.CASCADE, null=True)
+    orders_history = models.ForeignKey(to="OrdersHistory", related_name="cart", on_delete=models.SET_NULL, null=True)
 
 
 class CartItem(models.Model):

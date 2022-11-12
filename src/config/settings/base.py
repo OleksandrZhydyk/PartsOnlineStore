@@ -187,3 +187,4 @@ LOGIN_REDIRECT_URL = "index"
 LOGOUT_REDIRECT_URL = "login"
 
 LOGIN_URL = "login"
+CART_SESSION_ID = "cart"

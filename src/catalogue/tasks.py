@@ -35,9 +35,9 @@ def get_part_number():
 @shared_task
 def create_part(count=1):
     faker = Faker()
-    part_number = get_part_number()
     parts = ["shaft", "nut", "belt", "sprocket", "bracket", "shaft key", "lever", "bearing"]
     for _ in range(count):
+        part_number = get_part_number()
         Part.objects.create(
             part_number=part_number,
             part_name=parts[random.randint(0, 7)],

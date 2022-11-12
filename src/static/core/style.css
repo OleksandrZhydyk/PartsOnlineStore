@@ -6,7 +6,7 @@
 
 .wrapper-image::before {
   content: "";
-  background-image: url("/static/core/index_background.jpg");
+  background-image: url("index_background.jpg");
   background-size: cover;
   position: absolute;
   top: 0;
@@ -71,4 +71,8 @@
     width:  540px;
     height: 300px;
     object-fit: cover;
+}
+
+.buy-icon {
+    font-size: 18px;
 }

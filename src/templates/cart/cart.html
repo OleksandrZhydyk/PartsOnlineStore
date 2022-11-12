@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load quantity_extract%}
+{% block content %}
+<div class="container">
+    {% for part in parts %}
+    <div class="row">
+        <div class="col">
+            <a href="{% url 'part_detail' part.part_number%}"
+                           class="d-none d-lg-flex justify-content-center">
+            <img src="{{part.image.url}}" alt="part_image" width="200px">
+            </a>
+        </div>
+        <div class="col d-flex flex-column justify-content-center">
+            <div class="row">
+                <div class="col">
+                    <p>Part number:</p>
+                    <p>Part name:</p>
+                    <p>Price:</p>
+                </div>
+                <div class="col">
+                    <p class="fw-bolder">{{part.part_number}}</p>
+                    <p class="fw-bolder">{{part.part_name}}</p>
+                    <p class="fw-bolder">{{part.price}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col d-flex flex-column justify-content-center">
+            <form method="get" action="{#}">
+                <div class="row text-center">
+                    <div class="col">
+                        <button class="btn btn-secondary " type="button"
+                                onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    {% with number=part.part_number %}
+                    <div class="col">
+                        <input id="form1" min="1" name="quantity" value="{{ cart_data|get_value:number }}" type="number"
+                               class="form-control form-control-xs"/>
+                    </div>
+                    {% endwith %}
+                    <div class="col">
+                        <button class="btn btn-secondary" type="button"
+                                onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-1 d-flex flex-column justify-content-center ">
+            <a href="{% url 'delete_part_from_cart' part.part_number %}">
+                <button class="btn btn-danger" type="button">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </a>
+        </div>
+    </div>
+    <hr/>
+    {% endfor %}
+    <div class="row">
+        {% if parts %}
+        <div class="col">
+            <p class="text-center fs-4 fst-italic mt-5">
+                Total: {{total_cart_cost}}
+            </p>
+        </div>
+        <div class="col">
+            <a href="#">
+                <button class="btn btn-success text-center fs-4 fst-italic mt-5" type="button">
+                    Buy
+                    <i class="fa-regular fa-credit-card buy-icon"></i>
+                </button>
+            </a>
+        </div>
+        {% else %}
+        <div class="col">
+            <p class="text-center fs-3 fst-italic mt-5">
+                Cart empty, please add parts
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
