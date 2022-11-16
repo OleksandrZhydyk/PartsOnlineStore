@@ -8,8 +8,8 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="{% static 'core/style.css' %}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/9263a8e9dc.js" crossorigin="anonymous"></script>
 
     {% block map %}
@@ -31,55 +31,55 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <div>
-                        <ul class="navbar-nav">
-                            <li class="nav-item" >
-                                <a class="nav-link fs-4" href="{% url 'parts_view'%}">Parts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link fs-4" href="#">Pricing</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle fs-4" href="#" role="button" data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Dropdown link
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="d-flex ms-auto">
-                        <a href="{% url 'cart_view' %}">
-                        <i class="fa-solid fa-cart-shopping nav-cart-icon"></i>
-                            </a>
-                        <div class="flex-shrink-0 dropdown">
-                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle avatar"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            <img src="{% static 'core/empty_avatar.png' %}" alt="mdo" class="rounded-circle"
-                                 width="60" height="60">
-                        </a>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link fs-4" href="{% url 'parts_view'%}">Parts</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="row">
+                            <div class="col">
+                                <p class="text-warning fs-5 mb-0">Contact phone</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <p class="text-warning fs-4">+38-041-123-45-67</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <ul class="dropdown-menu dropdown-menu-end text-small shadow">
-                            {% if not user.is_authenticated%}
-                            <li><a class="dropdown-item" href="{% url 'login'%}">Login</a></li>
-                            <li><a class="dropdown-item" href="#">Sign in</a></li>
-                            {% else %}
-                            <li><a class="dropdown-item" href="{% url 'user_profile' user.pk %}">Profile</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    </div>
+                    </li>
+                </ul>
             </div>
+            <div class="d-flex ms-auto">
+                <a href="{% url 'cart_view' %}">
+                    <i class="fa-solid fa-cart-shopping nav-cart-icon"></i>
+                </a>
+                <div class="flex-shrink-0 dropdown">
+                    <a href="#" class="d-block link-light text-decoration-none dropdown-toggle avatar"
+                       data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <img src="{% static 'core/empty_avatar.png' %}" alt="mdo" class="rounded-circle"
+                             width="60" height="60">
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end text-small shadow">
+                        {% if not user.is_authenticated%}
+                        <li><a class="dropdown-item" href="{% url 'login'%}">Login</a></li>
+                        <li><a class="dropdown-item" href="#">Sign in</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'user_profile' user.pk %}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'orders_history' user.pk %}">Orders history</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 {% block content %}

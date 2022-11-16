@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Cart(models.Model):
@@ -7,15 +8,26 @@ class Cart(models.Model):
     PAYMENT_TYPES = (
         (1, "GooglePay"),
         (2, "Visa"),
-        (3, "PayPal"),
+        (3, "Cash"),
+    )
+
+    DELIVERY_SERVICES = (
+        (1, "Nova Poshta"),
+        (2, "Meest Express"),
+        (3, "Ukrposhta"),
+        (4, "Self-delivery"),
     )
 
     user = models.ForeignKey(to=get_user_model(), on_delete=models.SET_NULL, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     payment_type = models.IntegerField(choices=PAYMENT_TYPES, default=1)
-    payment_id = models.CharField(max_length=100, null=True, default="")
+    order_id = models.CharField(max_length=100, null=True, default="")
     ordered = models.BooleanField(default=False)
-    orders_history = models.ForeignKey(to="OrdersHistory", related_name="cart", on_delete=models.SET_NULL, null=True)
+    delivery_service = models.IntegerField(choices=DELIVERY_SERVICES, default=1)
+    phone_number = PhoneNumberField(blank=False, null=True)
+    contact_name = models.CharField(max_length=100, null=True, blank=False)
+    contact_surname = models.CharField(max_length=100, null=True, blank=False)
+    city = models.CharField(max_length=100, null=True, blank=False)
 
 
 class CartItem(models.Model):
@@ -25,9 +37,5 @@ class CartItem(models.Model):
     )
     cart = models.ForeignKey("Cart", related_name="cart_item", on_delete=models.CASCADE)
 
-    def get_price_by_part(self):
+    def get_total_by_item(self):
         return self.part.price * self.quantity
-
-
-class OrdersHistory(models.Model):
-    user = models.OneToOneField(to=get_user_model(), related_name="orders_history", on_delete=models.CASCADE)

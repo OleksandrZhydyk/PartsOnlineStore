@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from catalogue.validators import part_number_validator
@@ -23,7 +23,9 @@ class Part(models.Model):
         verbose_name="Price",
         validators=[MinValueValidator(limit_value=0.01, message="Price has to be greater then 0.01.")],
     )
-    discount_price = models.FloatField(verbose_name="Discount", blank=True, null=True)
+    discount_price = models.FloatField(verbose_name="Discount", blank=True, null=True,
+                                       validators=[MinValueValidator(limit_value=0.01),
+                                                   MaxValueValidator(limit_value=1)])
     date_created = models.DateTimeField(auto_now_add=True, null=True, editable=False, verbose_name="Part adding date")
     image = models.ImageField(
         default="part_photos/empty_part_image.png",

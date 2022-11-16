@@ -2,6 +2,7 @@
 {% load static %}
 {% load quantity_extract%}
 {% block content %}
+</br>
 <div class="container">
     {% for part in parts %}
     <div class="row">
@@ -63,13 +64,13 @@
     <div class="row">
         {% if parts %}
         <div class="col">
-            <p class="text-center fs-4 fst-italic mt-5">
+            <p class="text-center fs-4 mt-5">
                 Total: {{total_cart_cost}}
             </p>
         </div>
         <div class="col">
-            <a href="#">
-                <button class="btn btn-success text-center fs-4 fst-italic mt-5" type="button">
+            <a href="{% url 'make_order' %}">
+                <button class="btn btn-success text-center fs-4 mt-5" type="button">
                     Buy
                     <i class="fa-regular fa-credit-card buy-icon"></i>
                 </button>

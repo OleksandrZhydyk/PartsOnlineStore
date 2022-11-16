@@ -1,0 +1,14 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="container">
+
+    <p class="text-center fs-3 fst-italic mt-5"> Thanks for the order {{order_id}} </p>
+    <p class="text-center fs-3 fst-italic mt-5"> Administrator will contact you as soon as possible for order
+        confirmation </p>
+    </br>
+    <div class="text-center">
+        <i class="fa-solid fa-circle-check confirm-icon"></i>
+    </div>
+</div>
+{% endblock %}

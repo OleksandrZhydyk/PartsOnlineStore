@@ -1,0 +1,7 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+{%for cart in carts %}
+<p>{{cart}}</p>
+{% endfor %}
+{% endblock %}

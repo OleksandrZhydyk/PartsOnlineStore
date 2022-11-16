@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from accounts.models import Comment, CustomUser, Profile
-from cart.models import Cart, CartItem, OrdersHistory
+from cart.models import Cart, CartItem
 from catalogue.models import MachineModel, Part
 from core.models import Shop
 
@@ -31,24 +31,12 @@ class CartSerializer(serializers.ModelSerializer):
         fields = ("creation_date", "payment_type", "payment_id", "cart_item")
 
 
-class OrdersHistorySerializer(serializers.ModelSerializer):
-    cart = CartSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = OrdersHistory
-        fields = (
-            "user",
-            "cart",
-        )
-
-
 class CustomUserSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-    orders_history = OrdersHistorySerializer()
 
     class Meta:
         model = CustomUser
-        fields = ["id", "email", "first_name", "last_name", "date_joined", "profile", "orders_history"]
+        fields = ["id", "email", "first_name", "last_name", "date_joined", "profile"]
 
 
 class ShopSerializer(serializers.ModelSerializer):

@@ -43,13 +43,3 @@ def generate_shops(request, **kwargs):
         template_name="catalogue/generate_data.html",
         context={"title": "Generate part", "message": message},
     )
-
-
-# def add_to_cart(request, **kwargs):
-#     print(kwargs)
-#     CartItem.objects.create(part=kwargs.get('part_number'), quantity=kwargs.get('quantity')),
-#                             # cart_id=kwargs.get('user_cart'))
-# return HttpResponseRedirect(reverse("parts"))
-
-# return render(request, template_name="students_create.html", context={"response": response})
-#
