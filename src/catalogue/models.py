@@ -15,6 +15,9 @@ class Part(models.Model):
         (7, "Chassis"),
         (8, "Other"),
         (9, "Cab"),
+        (10, "AMS"),
+        (11, "Maintenance"),
+        (12, "Axles")
     )
 
     part_number = models.CharField(primary_key=True, max_length=50, validators=[part_number_validator])
@@ -25,7 +28,8 @@ class Part(models.Model):
     )
     discount_price = models.FloatField(verbose_name="Discount", blank=True, null=True,
                                        validators=[MinValueValidator(limit_value=0.01),
-                                                   MaxValueValidator(limit_value=1)])
+                                                   MaxValueValidator(limit_value=1)],
+                                       default=1)
     date_created = models.DateTimeField(auto_now_add=True, null=True, editable=False, verbose_name="Part adding date")
     image = models.ImageField(
         default="part_photos/empty_part_image.png",
@@ -38,8 +42,6 @@ class Part(models.Model):
     stock_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
     machine_system = models.IntegerField(choices=MACHINE_SYSTEMS, default=1, verbose_name="Machine type")
 
-    # def __str__(self):
-    #     return self.part_number
 
 class MachineModel(models.Model):
     MACHINE_TYPES = (

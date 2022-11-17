@@ -26,13 +26,13 @@ class ProfileForm(forms.ModelForm):
         fields = ("first_name", "last_name", "email", "photo", "phone_number", "address")
 
         widgets = {
-            "phone_number": forms.TextInput(attrs={"class": "form-control rounded border border-success p-2 mb-2"}),
+            "phone_number": forms.TextInput(attrs={"class": "form-control rounded border border-success p-2 mb-2"
+                                                   }),
             "first_name": forms.TextInput(attrs={"class": "form-control rounded border border-success p-2 mb-2"}),
             "last_name": forms.TextInput(attrs={"class": "form-control rounded border border-success p-2 mb-2"}),
             "address": forms.TextInput(attrs={"class": "form-control rounded border border-success p-2 mb-2"}),
             "photo": forms.ClearableFileInput(
-                attrs={"class": "form-control"},
-            ),
+                attrs={"class": "form-control"}),
         }
 
 

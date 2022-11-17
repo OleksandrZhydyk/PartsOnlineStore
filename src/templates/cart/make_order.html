@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 {% load static %}
 {% load amount_price %}
+{% load discount_percent %}
 {% block content %}
 <div class="container">
     </br>
@@ -13,11 +14,26 @@
                 <div class="row">
                     <div class="col">
                         <label class="labels fs-5 mt-3">Name</label>
+                        {% if profile.first_name %}
+                        <input class="form-control form-control-lg"
+                               name="contact_name" id="contact_name" value="{{profile.first_name}}">
+                        {% else %}
                         {{form.contact_name}}
+                        {% endif %}
                         <label class="labels fs-5 mt-3">Surname</label>
+                        {% if profile.last_name %}
+                        <input class="form-control form-control-lg"
+                               name="contact_surname" id="contact_surname" value="{{profile.last_name}}">
+                        {% else %}
                         {{form.contact_surname}}
+                        {% endif %}
                         <label class="labels fs-5 mt-3">Phone number</label>
+                        {% if profile.phone_number %}
+                        <input class="form-control form-control-lg"
+                               name="phone_number" id="phone_number" value="{{profile.phone_number}}">
+                        {% else %}
                         {{form.phone_number}}
+                        {% endif %}
                     </div>
                     <div class="col">
                         <label class="labels fs-5 mt-3">Delivery service</label>
@@ -25,7 +41,12 @@
                         <label class="labels fs-5 mt-3">Payment type</label>
                         {{form.payment_type}}
                         <label class="labels fs-5 mt-3">City</label>
+                        {% if profile.address %}
+                        <input class="form-control form-control-lg"
+                               name="city" id="city" value="{{profile.address}}">
+                        {% else %}
                         {{form.city}}
+                        {% endif %}
                     </div>
                 </div>
                 <input type="submit" value="Confirm order" class="btn btn-warning btn-lg mt-3">
@@ -40,6 +61,7 @@
                     <th scope="col">Part name</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
                     <th scope="col">Amount</th>
                 </tr>
                 </thead>
@@ -52,12 +74,13 @@
                     <td class="align-middle">{{value.part_name}}</td>
                     <td class="align-middle">{{value.quantity}}</td>
                     <td class="align-middle">{{value.price}}</td>
-                    <td class="align-middle">{{ value.quantity | multiply:value.price }}</td>
+                    <td class="align-middle">{{ value.discount | discount_percent }}%</td>
+                    <td class="align-middle">{{ value |multiply }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
-            <p class="text-end fs-4">Total: {{total_cart_cost}}</p>
+            <p class="text-end fs-5">Total: {{total_cart_cost}}</p>
         </div>
     </div>
 </div>

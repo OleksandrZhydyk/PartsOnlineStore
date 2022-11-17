@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load discount_percent %}
 {% block content %}
 <br>
 <div class="content">
@@ -104,11 +105,14 @@
                 {% for part in parts %}
                 <div class="row">
 
-                    <div class="col-12 col-lg-4">
+                    <div class="col-12 col-lg-4" id="part_pic_container">
                         <a href="{% url 'part_detail' part.part_number%}"
                            class="d-none d-lg-flex justify-content-center">
                             <img src="{{part.image.url}}" alt="part" width="200px" class="me-5">
                         </a>
+                        {% if part.discount_price < 1%}
+                        <span id="discount_tag"><i class="fa-solid fa-tags discount-tag"></i></span>
+                        {% endif %}
                     </div>
 
                     <div class="col d-flex flex-column justify-content-center">
@@ -117,54 +121,60 @@
                                 <p>Part number:</p>
                                 <p>Part name:</p>
                                 <p>Price:</p>
+                                {% if part.discount_price < 1%}
+                                <p>Discount:</p>
+                                {% endif %}
                             </div>
                             <div class="col">
-                                    <p class="fw-bolder">{{part.part_number}}</p>
+                                <p class="fw-bolder">{{part.part_number}}</p>
                                 <p class="fw-bolder">{{part.part_name}}</p>
                                 <p class="fw-bolder">{{part.price}}</p>
+                                {% if part.discount_price < 1%}
+                                <p class="fw-bolder text-danger">{{part.discount_price| discount_percent}}%</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
 
                     <div class="col d-flex flex-column justify-content-center">
                         <form method="get" action="{% url 'add_to_cart' part.part_number %}">
-                        <div class="row">
-                            <div class="col mb-3">
-                                {% if part.stock_quantity == 0 %}
+                            <div class="row">
+                                <div class="col mb-3">
+                                    {% if part.stock_quantity == 0 %}
                                     <button type="button" class="btn btn-secondary w-100">
                                         + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
                                     </button>
-                                {% else %}
-                                <a href="#">
-                                    <button type="submit" class="btn btn-warning w-100">
-                                        + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                    {% else %}
+                                    <a href="#">
+                                        <button type="submit" class="btn btn-warning w-100">
+                                            + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                        </button>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="row text-center">
+                                <div class="col">
+                                    <button class="btn btn-secondary " type="button"
+                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                                        <i class="fas fa-minus"></i>
                                     </button>
-                                </a>
-                                {% endif %}
-                            </div>
-                        </div>
+                                </div>
 
-                        <div class="row text-center">
-                            <div class="col">
-                                <button class="btn btn-secondary "type="button"
-                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
+                                <div class="col">
+                                    <input id="form1" min="1" name="quantity" value="1" type="number"
+                                           class="form-control form-control-xs"/>
+                                </div>
 
-                            <div class="col">
-                                <input id="form1" min="1" name="quantity" value="1" type="number"
-                                       class="form-control form-control-xs"/>
-                            </div>
+                                <div class="col">
+                                    <button class="btn btn-secondary" type="button"
+                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
 
-                            <div class="col">
-                                <button class="btn btn-secondary" type="button"
-                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
-                                    <i class="fas fa-plus"></i>
-                                </button>
                             </div>
-
-                        </div>
                         </form>
                         {% if part.stock_quantity == 0 %}
                         <div class="badge bg-secondary text-wrap mt-3" style="width: 6rem;">unavailable</div>

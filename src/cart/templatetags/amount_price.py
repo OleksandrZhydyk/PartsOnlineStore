@@ -4,5 +4,5 @@ register = template.Library()
 
 
 @register.filter(name="multiply")
-def multiply(quantity, price):
-    return int(quantity) * price
+def multiply(value):
+    return round(int(value['quantity']) * value['price'] * value['discount'], 2)

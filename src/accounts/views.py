@@ -2,9 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from accounts.forms import CommentForm, LoginForm, ProfileForm
 from accounts.models import Profile
@@ -21,12 +20,17 @@ class LogoutUser(LoginRequiredMixin, LogoutView):
     pass
 
 
-class UserProfile(LoginRequiredMixin, UpdateView):
-    model = Profile
-    template_name = "accounts/profile.html"
-    form_class = ProfileForm
-    success_url = reverse_lazy("index")
-    raise_exception = True
+@login_required
+def update_profile(request, pk):
+    profile = get_object_or_404(Profile, pk=pk)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("index"))
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, template_name="accounts/profile.html", context={"form": form})
 
 
 @login_required

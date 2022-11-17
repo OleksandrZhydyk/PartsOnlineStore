@@ -1,7 +1,30 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block content %}
-{%for cart in carts %}
-<p>{{cart}}</p>
-{% endfor %}
+<div class="container">
+    </br>
+         <p class="fs-4 text-center">Orders' history</p>
+            <table class="table">
+                <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Order date</th>
+                    <th scope="col">Order id</th>
+                    <th scope="col">Items in order</th>
+                    <th scope="col">Total price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {%for cart in carts %}
+                <tr>
+                    <th scope="row" class="align-middle">
+                        {{cart.creation_date}}
+                    </th>
+                    <td class="align-middle"><a href="{% url 'get_ordered_cart' cart.pk %}">{{cart.order_id}}</a></td>
+                    <td class="align-middle">{{cart.cart_item.values|length}}</td>
+                    <td class="align-middle">{{cart.total_amount}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+</div>
 {% endblock %}
