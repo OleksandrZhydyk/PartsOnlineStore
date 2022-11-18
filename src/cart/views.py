@@ -23,6 +23,7 @@ def add_to_cart(request, **kwargs):
             quantity_before = request.session['cart'][part_number]['quantity']
             request.session['cart'][part_number]['quantity'] = str(int(quantity) + int(quantity_before))
             request.session.modified = True
+        # if there is no part, add to session cart dict
         else:
             request.session['cart'][part_number] = {'quantity': quantity,
                                                     'price': part.price,

@@ -44,40 +44,53 @@
         <br/>
         <br/>
         <div class="row">
-            <div class="col-12 col-md-4">
-                <div class="card mb-5">
-                    <a href="#">
-                        <img src="{% static 'core/ams_deere.jpeg' %}" class="card-img-top img-fluid img-card"
-                             alt="ams_deere">
-                    </a>
-                    <div class="card-body m-auto">
-                        AMS attachments
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-4">
-                <div class="card mb-5">
-                    <a href="#">
-                        <img src="{% static 'core/engine_overhaul_kit.jpg' %}" class="card-img-top img-fluid img-card"
-                             alt="engine_overhaul_kit">
-                    </a>
-                    <div class="card-body m-auto">
-                        Engine overhaul kits
-                    </div>
 
-                </div>
+            <div class="col-12 col-md-4">
+                <form id="form1" action="catalogue/parts/" method="get">
+                    <div class="card mb-5">
+                        <a href="#" onclick="document.getElementById('form1').submit();">
+                            <input type="hidden" name="machine_system" value="10"/>
+                            <img src="{% static 'core/ams_deere.jpeg' %}" class="card-img-top img-fluid img-card"
+                                 alt="ams_deere">
+                        </a>
+                        <div class="card-body m-auto">
+                            AMS attachments
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <form id="form2" action="catalogue/parts/" method="get">
+                    <div class="card mb-5">
+                        <a href="#" onclick="document.getElementById('form2').submit();">
+                            <input type="hidden" name="machine_system" value="1"/>
+                            <img src="{% static 'core/engine_overhaul_kit.jpg' %}"
+                                 class="card-img-top img-fluid img-card"
+                                 alt="engine_overhaul_kit">
+                        </a>
+                        <div class="card-body m-auto">
+                            Engine overhaul kits
+                        </div>
+
+                    </div>
+                </form>
             </div>
             <div class="col-12 col-md-4">
-                <div class="card mb-5">
-                    <a href="#">
-                        <img src="{% static 'core/maintenance_parts.webp' %}" class="card-img-top img-fluid img-card"
-                             alt="maintenance_kit">
-                    </a>
-                    <div class="card-body m-auto">
-                        Maintenance kits
-                        <!--                            <p>Do-it-yourself John Deere machines maintenance made easy. All the exact parts you need to ensure your machine keeps running efficiently.</p>-->
+                <form id="form3" action="catalogue/parts/" method="get">
+                    <div class="card mb-5">
+                        <a href="#" onclick="document.getElementById('form3').submit();">
+                            <input type="hidden" name="machine_system" value="11"/>
+                            <img src="{% static 'core/maintenance_parts.webp' %}"
+                                 class="card-img-top img-fluid img-card"
+                                 alt="maintenance_kit">
+                        </a>
+                        <div class="card-body m-auto">
+                            Maintenance kits
+                            <!--                            <p>Do-it-yourself John Deere machines maintenance made easy. All the exact parts you need to ensure your machine keeps running efficiently.</p>-->
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
