@@ -129,4 +129,4 @@ dmypy.json
 .idea/
 Pipfile.lock
 .env
-.pem
+PartsOnlineStore_key.pem
