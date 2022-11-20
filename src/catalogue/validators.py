@@ -12,6 +12,6 @@ def part_number_validator(part_number):
     count = 0
     for digit in string.digits:
         if digit in part_number:
-            count += 1
+            count += part_number.count(digit)
     if count < 4:
         raise ValidationError("Part number has to have at least 4 digits")

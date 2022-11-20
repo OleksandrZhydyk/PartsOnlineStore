@@ -14,6 +14,7 @@ from accounts.managers import CustomUserManager
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(_("Email address"), null=True, unique=True)
+    username = models.CharField(null=True, blank=True, max_length=255)
     is_staff = models.BooleanField(
         _("staff status"),
         default=False,

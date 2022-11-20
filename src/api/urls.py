@@ -4,11 +4,10 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions, routers
 
 from api.views import (ModelCreateView, ModelDeleteView, ModelListView,
-                       ModelRetrieveView, ModelUpdateView,
-                       PartCreateView, PartDeleteView, PartListView,
-                       PartRetrieveView, PartUpdateView, ProfileUserUpdateView,
-                       ProfileUserView, ShopListView,
-                       ShopRetrieveUpdateDeleteView, UserViewSet)
+                       ModelRetrieveView, ModelUpdateView, PartCreateView,
+                       PartDeleteView, PartListView, PartRetrieveView,
+                       PartUpdateView, ProfileUserUpdateView, ProfileUserView,
+                       ShopListView, ShopRetrieveUpdateDeleteView, UserViewSet)
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet)

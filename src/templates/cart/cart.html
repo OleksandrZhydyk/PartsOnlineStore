@@ -5,6 +5,13 @@
 {% block content %}
 </br>
 <div class="container">
+    {% if parts %}
+    <div class="col">
+        <p class="text-center fs-3 fst-italic">
+            Parts added to cart
+        </p>
+    </div>
+    {% endif %}
     <form method="get" action="make_order/">
         {% for part in parts %}
         <div class="row">
@@ -43,7 +50,6 @@
             </div>
 
             <div class="col-3 d-flex flex-column justify-content-center">
-                <!--            <form method="get" action="{#}">-->
                 <div class="row text-center">
                     <div class="col">
                         <button class="btn btn-secondary " type="button"

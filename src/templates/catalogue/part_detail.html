@@ -83,40 +83,83 @@
                 <p class="fw-bolder">{{part.description}}</p>
             </div>
             <div class="col">
-                <p class="fw-bolder fs-3">Available at stores</p>
-                <ul>
-                    {% for shop in shops%}
-                    <li>{{shop.address}}</li>
-                    {% endfor %}
-                </ul>
+                <button class="btn btn-toggle btn-outline-warning align-items-center rounded collapsed fs-3
+                fw-bold text-dark mb-3"
+                        data-bs-toggle="collapse" data-bs-target="#shop-collapse"
+                        aria-expanded="false" type='button'>
+                    Available at stores
+                    <i class="fa-solid fa-shop"></i>
+                </button>
+                <div class="collapse" id="shop-collapse" style="">
+                    <ul>
+                        {% for shop in shops%}
+                        <li>{{shop.address}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
             </div>
         </div>
+        <div class="row">
+            <div class="col">
 
-        <button class="btn btn-toggle btn-outline-warning align-items-center rounded collapsed fs-3 fw-bold text-dark "
-                data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
-                aria-expanded="false" type='button'>
-            Reviews
-            <i class="fa-solid fa-arrow-down-short-wide"></i>
-        </button>
-
-
-        <div class="collapse" id="dashboard-collapse" style="">
-            <a href="{% url 'create_comment' part.part_number %}">
-                <button type="button" class="btn btn-success mt-3">
-                    Leave comment
-                    <i class="fa-solid fa-pen"></i>
+                <button class="btn btn-toggle btn-outline-warning align-items-center rounded collapsed fs-3 fw-bold text-dark "
+                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                        aria-expanded="false" type='button'>
+                    Reviews
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
                 </button>
-            </a>
-            <hr/>
-            {% for comment in comments%}
-            <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>
-            <p>{{comment.created}}</p>
-            <p class=" fw-bolder fst-italic">{{comment.user}}</p>
-            <p class=" fs-5">{{comment.comment}}</p>
-            <hr/>
-            {% endfor %}
+
+
+                <div class="collapse" id="dashboard-collapse" style="">
+                    <a href="{% url 'create_comment' part.part_number %}">
+                        <button type="button" class="btn btn-success mt-3">
+                            Leave comment
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </a>
+                    <hr/>
+                    {% for comment in comments%}
+                    <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>
+                    <p>{{comment.created}}</p>
+                    <p class=" fw-bolder fst-italic">{{comment.user}}</p>
+                    <p class=" fs-5">{{comment.comment}}</p>
+                    <hr/>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col">
+                <button class="btn btn-toggle btn-outline-warning align-items-center
+                 rounded collapsed fs-3 fw-bold text-dark mb-3"
+                        data-bs-toggle="collapse" data-bs-target="#machine-collapse"
+                        aria-expanded="false" type='button'>
+                    Where used on
+                    <i class="fa-solid fa-tractor"></i>
+                </button>
+                <div class="collapse" id="machine-collapse" style="">
+                    <table class="table">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th scope="col">Machine type</th>
+                            <th scope="col">Model</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for model in models %}
+                        <tr>
+                            <th scope="row" class="align-middle">
+                                {{model.get_machine_type_display}}
+                            </th>
+                            <td class="align-middle">{{model.model}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 {% endblock %}

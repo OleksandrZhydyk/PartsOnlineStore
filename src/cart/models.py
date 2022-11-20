@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -33,6 +33,9 @@ class Cart(models.Model):
     city = models.CharField(max_length=100, null=True, blank=False)
     total_amount = models.FloatField(blank=True, null=True, default=0)
 
+    def __str__(self):
+        return str(self.order_id)
+
 
 class CartItem(models.Model):
     part = models.ForeignKey("catalogue.Part", on_delete=models.CASCADE)
@@ -46,9 +49,16 @@ class CartItem(models.Model):
         verbose_name="Price",
         validators=[MinValueValidator(limit_value=0.01, message="Price has to be greater then 0.01.")],
     )
-    discount = models.FloatField(verbose_name="Discount", blank=True, null=True,
-                                 validators=[MinValueValidator(limit_value=0.01),
-                                             MaxValueValidator(limit_value=1)], default=1)
+    discount = models.FloatField(
+        verbose_name="Discount",
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(limit_value=0.01), MaxValueValidator(limit_value=1)],
+        default=1,
+    )
 
     def get_total_by_item(self):
         return round(self.price * self.discount * self.quantity, 2)
+
+    def __str__(self):
+        return str(self.part_number)

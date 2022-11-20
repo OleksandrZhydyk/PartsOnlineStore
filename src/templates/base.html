@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load socialaccount %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +46,7 @@
                     <a href="tel:+380411234567" class="text-warning fs-5 text-decoration-none"><i
                             class="fa-solid fa-square-phone"></i> +38 (041) 123 45 67</a>
                 </div>
-                <a href="{% url 'cart_view' %}">
+                <a href="{% url 'view_cart' %}">
                     <i class="fa-solid fa-cart-shopping nav-cart-icon"></i>
                 </a>
 
@@ -60,7 +61,11 @@
                     <ul class="dropdown-menu dropdown-menu-end text-small shadow">
                         {% if not user.is_authenticated%}
                         <li><a class="dropdown-item" href="{% url 'login'%}">Login</a></li>
-                        <li><a class="dropdown-item" href="#">Sign in</a></li>
+                        <li><a class="dropdown-item" href="{% url 'signup' %}">Sign up with email</a></li>
+                        <li><form action="{% provider_login_url 'google' %}" method="post">
+                                {% csrf_token %}
+                                <button class="dropdown-item" type="submit">Sign up with Google</button>
+                            </form></li>
                         {% else %}
                         <li><a class="dropdown-item" href="{% url 'user_profile' user.pk %}">Profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'orders_history' user.pk %}">Orders history</a></li>

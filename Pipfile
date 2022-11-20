@@ -37,6 +37,8 @@ redis = "*"
 flower = "*"
 django-debug-toolbar = "*"
 django-celery-beat = "*"
+hashids = "*"
+django-allauth = "*"
 
 [dev-packages]
 black = "==22.8.0"

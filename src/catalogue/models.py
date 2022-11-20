@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 from catalogue.validators import part_number_validator
@@ -17,7 +17,7 @@ class Part(models.Model):
         (9, "Cab"),
         (10, "AMS"),
         (11, "Maintenance"),
-        (12, "Axles")
+        (12, "Axles"),
     )
 
     part_number = models.CharField(primary_key=True, max_length=50, validators=[part_number_validator])
@@ -26,10 +26,13 @@ class Part(models.Model):
         verbose_name="Price",
         validators=[MinValueValidator(limit_value=0.01, message="Price has to be greater then 0.01.")],
     )
-    discount_price = models.FloatField(verbose_name="Discount", blank=True, null=True,
-                                       validators=[MinValueValidator(limit_value=0.01),
-                                                   MaxValueValidator(limit_value=1)],
-                                       default=1)
+    discount_price = models.FloatField(
+        verbose_name="Discount",
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(limit_value=0.01), MaxValueValidator(limit_value=1)],
+        default=1,
+    )
     date_created = models.DateTimeField(auto_now_add=True, null=True, editable=False, verbose_name="Part adding date")
     image = models.ImageField(
         default="part_photos/empty_part_image.png",
@@ -41,6 +44,9 @@ class Part(models.Model):
     description = models.TextField(blank=True, null=True, verbose_name="Description")
     stock_quantity = models.PositiveIntegerField(default=0, blank=True, null=True)
     machine_system = models.IntegerField(choices=MACHINE_SYSTEMS, default=1, verbose_name="Machine type")
+
+    def __str__(self):
+        return str(self.part_number)
 
 
 class MachineModel(models.Model):
@@ -55,3 +61,6 @@ class MachineModel(models.Model):
     model = models.CharField(max_length=15, verbose_name="Model")
     machine_type = models.IntegerField(choices=MACHINE_TYPES, default=1, verbose_name="Machine type")
     part = models.ManyToManyField(to="catalogue.Part", related_name="machine_model")
+
+    def __str__(self):
+        return str(self.model)

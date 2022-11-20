@@ -2,14 +2,14 @@ from config.settings.base import *  # NOQA
 
 CURRENT_ENV = "PROD"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["localhost"]
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"
 
 DATABASES = {
@@ -26,3 +26,5 @@ DATABASES = {
         "PORT": os.environ.get("POSTGRES_PORT"),
     },
 }
+
+FAIL_SILENTLY = True

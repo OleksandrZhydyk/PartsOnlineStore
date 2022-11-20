@@ -38,6 +38,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "debug_toolbar",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "phonenumber_field",
     "rest_framework",
     "rest_framework_simplejwt",
@@ -165,11 +169,39 @@ DJOSER = {
     "SERIALIZERS": {},
 }
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+}
+
 LOCATION_FIELD = {
     "provider.google.api": "//maps.google.com/maps/api/js?sensor=false",
     "provider.google.api_key": "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE",
     "provider.google.api_libraries": "",
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "alexosgt1@gmail.com"
+EMAIL_HOST_PASSWORD = "xynhbiubxwfroykx"
+EMAIL_PORT = 587
 
 GOOGLE_MAPS_API_KEY = "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE"
 

@@ -47,12 +47,22 @@
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                         {% for model in models%}
                                         <div class="form-check">
+                                            {% if model.model in checked_models%}
                                             <input class="form-check-input" type="checkbox" value="{{model.model}}"
-                                                   id="checkbox_model" name="machine_model">
+                                                   id="checkbox_model" name="machine_model" checked="True">
                                             <label class="form-check-label text-white fs-6 fw-bold"
-                                                   for="checkbox_model">
+                                                   for="checkbox_model" >
                                                 {{model.model}}
                                             </label>
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" value="{{model.model}}"
+                                                   id="checkbox_model1" name="machine_model">
+                                            <label class="form-check-label text-white fs-6 fw-bold"
+                                                   for="checkbox_model1" >
+                                                {{model.model}}
+                                            </label>
+                                            {% endif %}
+
                                         </div>
                                         {% endfor %}
                                     </ul>

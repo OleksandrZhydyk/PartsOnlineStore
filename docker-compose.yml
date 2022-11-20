@@ -11,7 +11,7 @@ services:
     volumes:
       - static_content:/PartsOnlineStore/src/static/
       - media_content:/PartsOnlineStore/src/media/
-      - ./src/media/generated_part_pic:/PartsOnlineStore/src/media/generated_part_pic
+      - ./src/media:/PartsOnlineStore/src/media
       - ./src:/PartsOnlineStore/src
     env_file:
       - .env
@@ -67,6 +67,7 @@ services:
     volumes:
       - static_content:/PartsOnlineStore/src/static/
       - media_content:/PartsOnlineStore/src/media/
+      - ./src/media:/PartsOnlineStore/src/media
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80

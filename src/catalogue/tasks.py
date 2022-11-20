@@ -42,7 +42,7 @@ def create_part(count=1):
             part_number=part_number,
             part_name=parts[random.randint(0, 7)],
             price=round(random.uniform(5, 500), 2),
-            discount_price=random.uniform(0, 0.9),
+            discount_price=round(random.uniform(0.5, 1), 2),
             image=get_part_pic(part_number),
             description=faker.paragraph(nb_sentences=4),
             stock_quantity=random.randint(1, 100),

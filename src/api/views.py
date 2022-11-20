@@ -8,9 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 from accounts.models import CustomUser
 from api.permissions import IsOwnerOrAdmin
 from api.serializers import (CustomUserSerializer, MachineModelSerializer,
-                             PartDetailSerializer,
-                             PartModelSerializer, PartSerializer,
-                             ShopSerializer)
+                             PartDetailSerializer, PartModelSerializer,
+                             PartSerializer, ShopSerializer)
 from catalogue.models import MachineModel, Part
 from core.models import Shop
 
@@ -104,4 +103,3 @@ class ShopRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
-

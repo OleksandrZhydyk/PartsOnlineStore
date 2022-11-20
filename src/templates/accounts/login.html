@@ -8,10 +8,14 @@
     <div class="content">
         <form method="POST" style="margin: auto;" class="col-md-4 text-center mt-5">
             {% csrf_token %}
-                {% for element in form %}
-            <div>{{element}}</div><br/>
+            {% for element in form %}
+            <div>{{element}}</div>
+            <br/>
             {% endfor %}
-            <input type="submit" value="Login" class="btn btn-warning mt-3 btn-lg">
+            <p class="text-center text-danger fs-4 fst-italic">
+                {{message}}
+            </p>
+            <input type="submit" value="Login" class="btn btn-warning btn-lg">
         </form>
     </div>
 </div>

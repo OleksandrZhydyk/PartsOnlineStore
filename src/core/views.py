@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
@@ -34,12 +35,18 @@ class Forbidden(TemplateView):
     extra_context = {"title": "Forbidden"}
 
 
+@login_required
 def generate_shops(request, **kwargs):
-    count = kwargs.get("count")
-    create_shops.delay(count)
-    message = "Shop created"
-    return render(
-        request,
-        template_name="catalogue/generate_data.html",
-        context={"title": "Generate part", "message": message},
-    )
+    if request.user.is_staff:
+        count = kwargs.get("count")
+        create_shops.delay(count)
+        message = "Shop created"
+        return render(
+            request,
+            template_name="catalogue/generate_data.html",
+            context={"title": "Generate part", "message": message},
+        )
+    else:
+        return render(request,
+                      template_name="core/forbidden.html",
+                      )
