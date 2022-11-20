@@ -1,0 +1,149 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<div class="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="flex-shrink-0 p-3 bg-secondary" style="width: 280px;">
+
+                    <span class="fs-4 fw-semibold text-white">
+          Filter by
+          <i class="fa-solid fa-filter"></i>
+      </span>
+                    <form method="get">
+                        <ul class="list-unstyled ps-0">
+                            <li class="border-top my-3"></li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed fs-5 fw-bold text-white btn-sidebar"
+                                        data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false"
+                                        type='button'>
+                                    Model
+                                    <i class="fa-solid fa-tractor tractor-icon"></i>
+                                </button>
+                                <div class="collapse show" id="home-collapse" style="">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        {% for model in models%}
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{model.model}}"
+                                                   id="checkbox_model" name="model[]">
+                                            <label class="form-check-label text-white fs-6 fw-bold"
+                                                   for="checkbox_model">
+                                                {{model.model}}
+                                            </label>
+
+                                        </div>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="mb-1">
+                                <button class="btn btn-toggle align-items-center rounded collapsed fs-5 fw-bold text-white btn-sidebar"
+                                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                                        aria-expanded="false" type='button'>
+                                    System
+                                    <i class="fa-solid fa-gears gear-icon"></i>
+                                </button>
+
+                                <div class="collapse show" id="dashboard-collapse" style="">
+                                    {% for system in machine_systems%}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{system.get_machine_system_display}}" id="checkbox_system"
+                                               name="system[]">
+                                        <label class="form-check-label text-white fs-6 fw-bold" for="checkbox_system">
+                                            {{system.get_machine_system_display}}
+                                        </label>
+
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                            </li>
+
+                            <!--                        <li class="border-top my-3"></li>-->
+                            <!--                        <li class="mb-1">-->
+                            <!--                            <button class="btn btn-toggle align-items-center rounded collapsed"-->
+                            <!--                                    data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">-->
+                            <!--                                Account-->
+                            <!--                            </button>-->
+                            <!--                            <div class="collapse" id="account-collapse">-->
+                            <!--                                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
+                            <!--                                    <li><a href="#" class="link-white rounded">New...</a></li>-->
+                            <!--                                    <li><a href="#" class="link-dark rounded">Profile</a></li>-->
+                            <!--                                    <li><a href="#" class="link-dark rounded">Settings</a></li>-->
+                            <!--                                    <li><a href="#" class="link-dark rounded">Sign out</a></li>-->
+                            <!--                                </ul>-->
+                            <!--                            </div>-->
+                            <!--                        </li>-->
+                        </ul>
+                        <a href="{% url 'filter_parts_list' %}">
+                            <button class="btn btn-warning " type="submit">
+                                Apply filters <i class="fa-solid fa-circle-check"></i>
+                            </button>
+                        </a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-9">
+                <p class="fs-1 fw-bolder text-center"> John Deere parts list</p>
+                <hr/>
+                {% for part in data %}
+                <div class="row">
+
+                    <div class="col">
+                        <a href="#">
+                            <img src="{{part.image.url}}" alt="part" width="200px" class="me-5">
+                        </a>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center">
+                        <p class="fw-bolder">Part number: {{part.part_number}}</p>
+                        <p class="fw-bolder">Part name: {{part.part_name}}</p>
+                        <p class="fw-bolder">Price: {{part.price}}</p>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center add-to-cart">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <a href="{% url 'add_to_cart' part %}">
+                                    <button type="submit" class="btn btn-warning w-100">
+                                        + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="row text-center">
+                            <div class="col">
+                                <button class="btn btn-secondary"
+                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+
+                            <div class="col">
+                                <input id="form1" min="0" name="quantity" value="1" type="number"
+                                       class="form-control form-control-xs"/>
+                            </div>
+
+                            <div class="col">
+                                <button class="btn btn-secondary"
+                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <hr/>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

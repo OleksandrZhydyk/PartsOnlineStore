@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load discount_percent %}
+{% load amount_price %}
+{% block content %}
+<div class="container">
+</br>
+    <div class="row">
+        <div class="col">
+            <p class="fs-4 text-center">Order {{cart.order_id}}</p>
+            <table class="table">
+                <thead class="table-secondary">
+                <tr>
+                    <th scope="col">Part number</th>
+                    <th scope="col">Part name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Discount</th>
+                    <th scope="col">Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for item in cart_items %}
+                <tr>
+                    <th scope="row" class="align-middle">
+                        {{item.part_number}}
+                    </th>
+                    <td class="align-middle">{{item.part_name}}</td>
+                    <td class="align-middle">{{item.quantity}}</td>
+                    <td class="align-middle">{{item.price}}</td>
+                    <td class="align-middle">{{ item.discount | discount_percent }}%</td>
+                    <td class="align-middle">{{ item.get_total_by_item }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p class="text-end fs-5">Total: {{cart.total_amount}}</p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

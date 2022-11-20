@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block background %}
+<div class="wrapper-image"></div>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="content">
+        <p class="text-center badge bg-secondary text-wrap fs-3 fst-italic">
+            You're not authorized! Please, login before
+        </p>
+        <a class="nav-link" href="{%url 'login'%}">
+            <button class="btn btn-warning" type="button">Login</button>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+
+<!--{% extends 'base.html'%}-->
+<!--{% load static %}-->
+<!--{% block content %}-->
+<!--<br>-->
+<!--<form style="margin: auto;" class="col-md-4 text-center">-->
+<!--    <p  class="text-center badge bg-secondary text-wrap fs-3 fst-italic">-->
+<!--        You're not authorized! Please, login before</p>-->
+<!--    <a class="nav-link" href="{%url 'login'%}">-->
+<!--    <button class="btn btn-warning" type="button">Login</button>-->
+<!--    </a></form>-->
+<!--<br>-->
+<!--<img src="{% static 'students/images/not_authorized.png'%}" style="display: block; margin:0 auto;" >-->
+<!--{% endblock %}-->

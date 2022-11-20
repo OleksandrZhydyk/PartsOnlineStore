@@ -1,0 +1,51 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+asgiref = "==3.5.2"
+click = "==8.1.3"
+django = "==4.1.1"
+mccabe = "==0.7.0"
+mypy-extensions = "==0.4.3"
+pathspec = "==0.10.1"
+platformdirs = "==2.5.2"
+pycodestyle = "==2.9.1"
+pyflakes = "==2.5.0"
+sqlparse = "==0.4.2"
+tomli = "==2.0.1"
+django-phonenumber-field = {extras = ["phonenumberslite"], version = "*"}
+pillow = "*"
+wheel = "*"
+django-extensions = "*"
+djangorestframework = "*"
+simplejwt = "*"
+djangorestframework-simplejwt = "*"
+djoser = "*"
+drf-yasg = "*"
+psycopg2-binary = "*"
+django-mongodb-engine = {git = "https://github.com/django-nonrel/mongodb-engine"}
+djongo = "*"
+mongoengine = "*"
+faker = "*"
+django-leaflet = "*"
+django-location-field = "*"
+webargs = "*"
+celery = "*"
+redis = "*"
+flower = "*"
+django-debug-toolbar = "*"
+django-celery-beat = "*"
+hashids = "*"
+django-allauth = "*"
+
+[dev-packages]
+black = "==22.8.0"
+flake8 = "==5.0.4"
+isort = "==5.10.1"
+pydot = "*"
+graphviz = "*"
+
+[requires]
+python_version = "*"

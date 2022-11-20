@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block background %}
+<div class="wrapper-image"></div>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="content">
+        <form method="POST" style="margin: auto;" class="col-md-4 text-center mt-5">
+            {% csrf_token %}
+            {% for element in form %}
+            <div>{{element}}</div>
+            <br/>
+            {% endfor %}
+            <p class="text-center text-danger fs-4 fst-italic">
+                {{message}}
+            </p>
+            <input type="submit" value="Login" class="btn btn-warning btn-lg">
+        </form>
+    </div>
+</div>
+{% endblock %}
