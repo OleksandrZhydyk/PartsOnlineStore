@@ -72,7 +72,7 @@ def delete_part_from_cart(request, **kwargs):
     part_number = kwargs.get("part_number")
     del cart_data[part_number]
     request.session.modified = True
-    return HttpResponseRedirect(reverse("cart_view"))
+    return HttpResponseRedirect(reverse("view_cart"))
 
 
 @login_required
