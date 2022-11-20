@@ -11,7 +11,7 @@ from core.models import Shop
 def generate_parts(request, **kwargs):
     if request.user.is_staff:
         count = kwargs.get("count")
-        create_part.delay(count)
+        create_part(count)
         message = "Part created"
         return render(
             request,
@@ -28,7 +28,7 @@ def generate_parts(request, **kwargs):
 def generate_machine_models(request, **kwargs):
     if request.user.is_staff:
         count = kwargs.get("count")
-        create_machine_model.delay(count)
+        create_machine_model(count)
         message = "Machine model created"
         return render(
             request,
@@ -65,8 +65,6 @@ def get_parts_view(request):
         value_list = request.GET.getlist("machine_system")
         parts = parts.filter(machine_system__in=value_list).distinct()
         checked_systems = value_list
-        print("sys")
-        print(checked_systems)
 
     if "part_name" in request.GET:
         part_name = request.GET["part_name"]

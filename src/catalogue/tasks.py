@@ -10,7 +10,7 @@ from catalogue.models import MachineModel, Part
 def get_part_pic(pic_name):
     width = 300
     height = 300
-    font = ImageFont.truetype("catalogue/arial.ttf", size=60)
+    font = ImageFont.truetype("src/catalogue/arial.ttf", size=60)
 
     img = Image.new("RGB", (width, height), color="grey")
 
@@ -22,7 +22,7 @@ def get_part_pic(pic_name):
 
     imgDraw.text((xText, yText), pic_name, font=font, fill=(255, 255, 0))
 
-    img.save(f"media/generated_part_pic/{pic_name}.png")
+    img.save(f"src/media/generated_part_pic/{pic_name}.png")
 
     return f"generated_part_pic/{pic_name}.png"
 

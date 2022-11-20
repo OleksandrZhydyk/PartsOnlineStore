@@ -83,7 +83,7 @@ def create_comment(request, **kwargs):
 def generate_user(request, **kwargs):
     if request.user.is_staff:
         count = kwargs.get("count")
-        create_user.delay(count)
+        create_user(count)
         message = "User created"
         return render(
             request,

@@ -39,7 +39,7 @@ class Forbidden(TemplateView):
 def generate_shops(request, **kwargs):
     if request.user.is_staff:
         count = kwargs.get("count")
-        create_shops.delay(count)
+        create_shops(count)
         message = "Shop created"
         return render(
             request,
