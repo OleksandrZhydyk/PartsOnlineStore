@@ -2,7 +2,7 @@ from config.settings.base import *  # NOQA
 
 CURRENT_ENV = "PROD"
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost", "ec2-44-202-128-139.compute-1.amazonaws.com"]
 
