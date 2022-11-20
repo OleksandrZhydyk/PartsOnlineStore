@@ -4,7 +4,7 @@ CURRENT_ENV = "PROD"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "ec2-44-202-128-139.compute-1.amazonaws.com"]
+ALLOWED_HOSTS = ["localhost", "ec2-44-202-128-139.compute-1.amazonaws.com", "44.202.128.139"]
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
