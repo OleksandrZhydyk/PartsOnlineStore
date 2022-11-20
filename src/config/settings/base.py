@@ -14,8 +14,9 @@ from datetime import timedelta
 from pathlib import Path
 
 import mongoengine
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from celery.schedules import crontab
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
@@ -36,6 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "debug_toolbar",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "phonenumber_field",
     "rest_framework",
     "rest_framework_simplejwt",
@@ -43,6 +49,7 @@ INSTALLED_APPS = [
     "djoser",
     "drf_yasg",
     "location_field.apps.DefaultConfig",
+    "django_celery_beat",
     "api",
     "core",
     "accounts",
@@ -52,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -161,17 +169,56 @@ DJOSER = {
     "SERIALIZERS": {},
 }
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    },
+}
+
 LOCATION_FIELD = {
     "provider.google.api": "//maps.google.com/maps/api/js?sensor=false",
     "provider.google.api_key": "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE",
     "provider.google.api_libraries": "",
 }
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "alexosgt1@gmail.com"
+EMAIL_HOST_PASSWORD = "xynhbiubxwfroykx"
+EMAIL_PORT = 587
+
 GOOGLE_MAPS_API_KEY = "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE"
 
 CELERY_BROKER_URL = "redis://redis"
-CELERY_RESULT_BACKEND = "redis://redis"
+RESULT_BACKEND = "redis://redis"
+ACCEPT_CONTENT = ["application/json"]
+RESULT_SERIALIZER = "json"
+TASK_SERIALIZER = "json"
 
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TASK_SERIALIZER = "json"
+CELERY_BEAT_SCHEDULE = {
+    "create_part_task": {"task": "catalogue.tasks.create_part", "schedule": crontab(minute="*/30")}
+}
+
+LOGIN_REDIRECT_URL = "index"
+LOGOUT_REDIRECT_URL = "login"
+
+LOGIN_URL = "login"
+CART_SESSION_ID = "cart"
+
+PHONENUMBER_DEFAULT_FORMAT = "INTERNATIONAL"

@@ -10,7 +10,7 @@ from catalogue.models import MachineModel, Part
 def get_part_pic(pic_name):
     width = 300
     height = 300
-    font = ImageFont.truetype("catalogue/arial.ttf", size=60)
+    font = ImageFont.truetype("src/catalogue/arial.ttf", size=60)
 
     img = Image.new("RGB", (width, height), color="grey")
 
@@ -22,7 +22,7 @@ def get_part_pic(pic_name):
 
     imgDraw.text((xText, yText), pic_name, font=font, fill=(255, 255, 0))
 
-    img.save(f"media/generated_part_pic/{pic_name}.png")
+    img.save(f"src/media/generated_part_pic/{pic_name}.png")
 
     return f"generated_part_pic/{pic_name}.png"
 
@@ -35,14 +35,14 @@ def get_part_number():
 @shared_task
 def create_part(count=1):
     faker = Faker()
-    part_number = get_part_number()
     parts = ["shaft", "nut", "belt", "sprocket", "bracket", "shaft key", "lever", "bearing"]
     for _ in range(count):
+        part_number = get_part_number()
         Part.objects.create(
             part_number=part_number,
             part_name=parts[random.randint(0, 7)],
             price=round(random.uniform(5, 500), 2),
-            discount_price=random.uniform(0, 0.9),
+            discount_price=round(random.uniform(0.5, 1), 2),
             image=get_part_pic(part_number),
             description=faker.paragraph(nb_sentences=4),
             stock_quantity=random.randint(1, 100),

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load quantity_extract %}
+{% load discount_percent %}
+{% block content %}
+</br>
+<div class="container">
+    {% if parts %}
+    <div class="col">
+        <p class="text-center fs-3 fst-italic">
+            Parts added to cart
+        </p>
+    </div>
+    {% endif %}
+    <form method="get" action="make_order/">
+        {% for part in parts %}
+        <div class="row">
+            <div class="col-4" id="part_pic_container">
+
+                <a href="{% url 'part_detail' part.part_number%}"
+                   class="d-none d-lg-flex justify-content-center">
+                    <img src="{{part.image.url}}" alt="part_image" width="200px">
+                </a>
+                {% if part.discount_price < 1 %}
+                <span id="discount_tag">
+                    <i class="fa-solid fa-tags discount-tag"></i>
+                </span>
+                {% endif %}
+
+            </div>
+            <div class="col-4 d-flex flex-column justify-content-center">
+                <div class="row">
+                    <div class="col">
+                        <p>Part number:</p>
+                        <p>Part name:</p>
+                        <p>Price:</p>
+                        {% if part.discount_price < 1%}
+                        <p>Discount:</p>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <p class="fw-bolder">{{part.part_number}}</p>
+                        <p class="fw-bolder">{{part.part_name}}</p>
+                        <p class="fw-bolder">{{part.price}}</p>
+                        {% if part.discount_price < 1%}
+                        <p class="fw-bolder text-danger">{{part.discount_price| discount_percent}}%</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 d-flex flex-column justify-content-center">
+                <div class="row text-center">
+                    <div class="col">
+                        <button class="btn btn-secondary " type="button"
+                                onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                    {% with number=part.part_number %}
+                    <div class="col">
+                        <input id="form1" min="1" name="{{part.part_number}}" value="{{ cart_data|get_value:number }}"
+                               type="number"
+                               class="form-control form-control-xs"/>
+                    </div>
+                    {% endwith %}
+                    <div class="col">
+                        <button class="btn btn-secondary" type="button"
+                                onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <!--            </form>-->
+            </div>
+            <div class="col-1 d-flex flex-column justify-content-center ">
+                <a href="{% url 'delete_part_from_cart' part.part_number %}">
+                    <button class="btn btn-danger" type="button">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </a>
+            </div>
+        </div>
+        <hr/>
+        {% endfor %}
+        <div class="row">
+            {% if parts %}
+            <div class="col d-flex flex-column justify-content-center">
+
+                <p class="text-center fs-4 mt-4">
+                    Total: {{total_cart_cost}}
+                </p>
+            </div>
+            <div class="col d-flex flex-column justify-content-center">
+                <button class="btn btn-success text-center fs-4 mt-4 me-5 ms-5" type="submit">
+                    Make order
+                    <i class="fa-regular fa-credit-card buy-icon"></i>
+                </button>
+            </div>
+            {% else %}
+            <div class="col">
+                <p class="text-center fs-3 fst-italic mt-5">
+                    Cart empty, please add parts
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </form>
+    </br>
+</div>
+{% endblock %}

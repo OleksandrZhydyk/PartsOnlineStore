@@ -1,14 +1,16 @@
 {% extends 'base.html'%}
 {% load static %}
-
+{% load discount_percent %}
 {% block content %}
 <br>
 <div class="content">
-<div class="container">
-
+    <div class="container">
         <div class="row">
-            <div class="col d-flex flex-column justify-content-center">
+            <div class="col d-flex flex-column justify-content-center" id="part_pic_container">
                 <img src="{{part.image.url}}" alt="part" width="250px" class="me-5">
+                {% if part.discount_price < 1%}
+                <span id="discount_tag"><i class="fa-solid fa-tags discount-tag"></i></span>
+                {% endif %}
             </div>
             <div class="col d-flex flex-column justify-content-center">
                 <div class="row">
@@ -16,12 +18,18 @@
                         <p class="fs-5">Part number:</p>
                         <p class="fs-5">Part name:</p>
                         <p class="fs-5">Price:</p>
+                        {% if part.discount_price < 1%}
+                        <p class="fs-5">Discount:</p>
+                        {% endif %}
                         <p class="fs-5">Machine system:</p>
                     </div>
                     <div class="col">
                         <p class="fs-5 fw-bolder">{{part.part_number}}</p>
                         <p class="fs-5 fw-bolder">{{part.part_name}}</p>
                         <p class="fs-5 fw-bolder">{{part.price}}</p>
+                        {% if part.discount_price < 1%}
+                        <p class="fs-5 fw-bolder text-danger">{{part.discount_price| discount_percent}}%</p>
+                        {% endif %}
                         <p class="fs-5 fw-bolder">{{part.get_machine_system_display}}</p>
                     </div>
                 </div>
@@ -30,64 +38,128 @@
                 <div class="row">
                     <div class="col">
                         <div class="row">
-                            <div class="col mb-3">
-                                <a href="#">
-                                    <button type="submit" class="btn btn-warning w-100">
+                            <form method="get" action="{% url 'add_to_cart' part.part_number %}">
+                                <div class="col mb-3">
+                                    {% if part.stock_quantity == 0 %}
+                                    <button type="submit" class="btn btn-secondary w-100">
                                         + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
                                     </button>
-                                </a>
-                            </div>
-                            <div class="row text-center">
-                                <div class="col">
-                                    <button class="btn btn-secondary"
-                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                                    {% else %}
+                                    <a href="#">
+                                        <button type="submit" class="btn btn-warning w-100">
+                                            + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                        </button>
+                                    </a>
+                                    {% endif %}
                                 </div>
-                                <div class="col">
-                                    <input id="form1" min="0" name="quantity" value="1" type="number"
-                                           class="form-control form-control-xs"/>
+                                <div class="row text-center">
+                                    <div class="col">
+                                        <button class="btn btn-secondary" type="button"
+                                                onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col">
+                                        <input id="form1" min="0" name="quantity" value="1" type="number"
+                                               class="form-control form-control-xs"/>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-secondary" type="button"
+                                                onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <button class="btn btn-secondary"
-                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-<br>
+        <br>
+        <div class="row">
+            <div class="col">
+                <p class="fw-bolder fs-3">Description </p>
+                <p class="fw-bolder">{{part.description}}</p>
+            </div>
+            <div class="col">
+                <button class="btn btn-toggle btn-outline-warning align-items-center rounded collapsed fs-3
+                fw-bold text-dark mb-3"
+                        data-bs-toggle="collapse" data-bs-target="#shop-collapse"
+                        aria-expanded="false" type='button'>
+                    Available at stores
+                    <i class="fa-solid fa-shop"></i>
+                </button>
+                <div class="collapse" id="shop-collapse" style="">
+                    <ul>
+                        {% for shop in shops%}
+                        <li>{{shop.address}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
         <div class="row">
             <div class="col">
 
-                <p class="fw-bolder fs-3">Description </p>
-                <p class="fw-bolder">{{part.description}}</p>
+                <button class="btn btn-toggle btn-outline-warning align-items-center rounded collapsed fs-3 fw-bold text-dark "
+                        data-bs-toggle="collapse" data-bs-target="#dashboard-collapse"
+                        aria-expanded="false" type='button'>
+                    Reviews
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                </button>
 
+
+                <div class="collapse" id="dashboard-collapse" style="">
+                    <a href="{% url 'create_comment' part.part_number %}">
+                        <button type="button" class="btn btn-success mt-3">
+                            Leave comment
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </a>
+                    <hr/>
+                    {% for comment in comments%}
+                    <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>
+                    <p>{{comment.created}}</p>
+                    <p class=" fw-bolder fst-italic">{{comment.user}}</p>
+                    <p class=" fs-5">{{comment.comment}}</p>
+                    <hr/>
+                    {% endfor %}
+                </div>
             </div>
             <div class="col">
-                <p class="fw-bolder fs-3">Shops by part </p>
-                <ul>
-                    {% for shop in shops%}
-                    <li>{{shop.address}}</li>
-                    {% endfor %}
-                </ul>
+                <button class="btn btn-toggle btn-outline-warning align-items-center
+                 rounded collapsed fs-3 fw-bold text-dark mb-3"
+                        data-bs-toggle="collapse" data-bs-target="#machine-collapse"
+                        aria-expanded="false" type='button'>
+                    Where used on
+                    <i class="fa-solid fa-tractor"></i>
+                </button>
+                <div class="collapse" id="machine-collapse" style="">
+                    <table class="table">
+                        <thead class="table-secondary">
+                        <tr>
+                            <th scope="col">Machine type</th>
+                            <th scope="col">Model</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for model in models %}
+                        <tr>
+                            <th scope="row" class="align-middle">
+                                {{model.get_machine_type_display}}
+                            </th>
+                            <td class="align-middle">{{model.model}}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        <div>
-            <p class="fw-bolder fs-3">Comments</p>
-            {% for comment in comments%}
-            <p>{{comment.user.first_name}} {{comment.user.last_name}}</p>
-            <p class="fst-italic">{{comment.user}}</p>
-            <p class="fw-bolder fs-5">{{comment.comment}}</p>
-            <hr/>
-            {% endfor %}
         </div>
     </div>
 </div>
+
 
 {% endblock %}

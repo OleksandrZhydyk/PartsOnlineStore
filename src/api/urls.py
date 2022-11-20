@@ -4,12 +4,10 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions, routers
 
 from api.views import (ModelCreateView, ModelDeleteView, ModelListView,
-                       ModelRetrieveView, ModelUpdateView,
-                       OrdersHistoryListView, OrdersHistoryRetrieveView,
-                       PartCreateView, PartDeleteView, PartListView,
-                       PartRetrieveView, PartUpdateView, ProfileUserUpdateView,
-                       ProfileUserView, ShopListView,
-                       ShopRetrieveUpdateDeleteView, UserViewSet)
+                       ModelRetrieveView, ModelUpdateView, PartCreateView,
+                       PartDeleteView, PartListView, PartRetrieveView,
+                       PartUpdateView, ProfileUserUpdateView, ProfileUserView,
+                       ShopListView, ShopRetrieveUpdateDeleteView, UserViewSet)
 
 router = routers.DefaultRouter()
 router.register("users", UserViewSet)
@@ -52,6 +50,4 @@ urlpatterns = [
     path("model/<str:model>/update/", ModelUpdateView.as_view(), name="model_update"),
     path("shop/", ShopListView.as_view(), name="shops_list"),
     path("shop/<int:pk>/", ShopRetrieveUpdateDeleteView.as_view(), name="shop_crud"),
-    path("orders_history/", OrdersHistoryListView.as_view(), name="orders_history_list"),
-    path("orders_history/<uuid:pk>/", OrdersHistoryRetrieveView.as_view(), name="orders_history_retrieve"),
 ]

@@ -7,10 +7,8 @@ class TestCustomUser(TestCase):
         self.client = Client()
         self.user = get_user_model().objects.create(email="test@test.mail")
         self.user.set_password("password")
-        self.user.save()
         self.admin = get_user_model().objects.create(email="admin@test.mail")
         self.admin.set_password("admin_password")
-        self.admin.save()
 
     def tearDown(self) -> None:
         self.admin.delete()

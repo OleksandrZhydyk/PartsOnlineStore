@@ -5,8 +5,6 @@ from rest_framework.status import (HTTP_200_OK, HTTP_201_CREATED,
                                    HTTP_403_FORBIDDEN)
 from rest_framework.test import APIClient
 
-from accounts.models import Profile
-from cart.models import OrdersHistory
 from catalogue.models import MachineModel, Part
 from core.models import Shop
 
@@ -16,10 +14,8 @@ class TestAPIViews(TestCase):
         self.client = APIClient()
         self.admin = get_user_model().objects.create(email="admin@test.mail", is_staff=True)
         self.admin.set_password("password")
-        self.admin.save()
         self.user = get_user_model().objects.create(email="user@test.mail")
         self.user.set_password("password")
-        self.user.save()
 
     def tearDown(self) -> None:
         self.user.delete()
@@ -82,19 +78,9 @@ class TestAPIViews(TestCase):
         self.assertEqual(response.data["price"], 7.5)
 
     def test_user_to_foreign_user_profile_access(self):
-        Profile.objects.create(user=self.user)
         self.strange_user = get_user_model().objects.create(email="strange_user@test.mail")
         self.strange_user.set_password("password")
         self.strange_user.save()
         self.client.force_authenticate(user=self.strange_user)
         response = self.client.get(reverse("profile_retrieve", kwargs={"pk": self.user.pk}))
-        self.assertEqual(response.status_code, HTTP_403_FORBIDDEN)
-
-    def test_user_to_foreign_user_orders_history_access(self):
-        OrdersHistory.objects.create(user=self.user)
-        self.strange_user = get_user_model().objects.create(email="strange_user@test.mail")
-        self.strange_user.set_password("password")
-        self.strange_user.save()
-        self.client.force_authenticate(user=self.strange_user)
-        response = self.client.get(reverse("orders_history_retrieve", kwargs={"pk": self.user.pk}))
         self.assertEqual(response.status_code, HTTP_403_FORBIDDEN)

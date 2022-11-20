@@ -1,12 +1,33 @@
 {% extends 'base.html'%}
 {% load static %}
+{% load discount_percent %}
 {% block content %}
 <br>
 <div class="content">
     <div class="container">
         <div class="row">
-            <div class="col-3">
-                <div class="flex-shrink-0 p-3 bg-secondary" style="width: 280px;">
+            <div class="col-12 col-lg-3">
+                <div class="flex-shrink-0 p-3 bg-secondary">
+                    <form style="margin: auto;" method="get" action="/catalogue/parts">
+                        <label for="select-form" class="fs-4 fw-bold text-white">Choose category:</label>
+                        <select class="form-select form-select-lg mb-2" aria-label="Default select example"
+                                name="field" id="select-form">
+                            <option selected value="part_number">by part number</option>
+                            <option value="machine_model">by model</option>
+                            <option value="part_name">by part name</option>
+                        </select>
+                        <div class="mb-2">
+                            <input type="search" class="form-control form-control-lg" name="search"
+                                   placeholder="searching value">
+                        </div>
+
+
+                        <div class="d-flex justify-content-center mb-5">
+                            <button type="submit" class="btn btn-warning fs-5 me-md-4 btn-lg">Search
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </form>
 
                     <span class="fs-4 fw-semibold text-white">
                         Filter by
@@ -26,12 +47,22 @@
                                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                         {% for model in models%}
                                         <div class="form-check">
+                                            {% if model.model in checked_models%}
                                             <input class="form-check-input" type="checkbox" value="{{model.model}}"
-                                                   id="checkbox_model" name="machine_model">
+                                                   id="checkbox_model" name="machine_model" checked="True">
                                             <label class="form-check-label text-white fs-6 fw-bold"
-                                                   for="checkbox_model">
+                                                   for="checkbox_model" >
                                                 {{model.model}}
                                             </label>
+                                            {% else %}
+                                            <input class="form-check-input" type="checkbox" value="{{model.model}}"
+                                                   id="checkbox_model1" name="machine_model">
+                                            <label class="form-check-label text-white fs-6 fw-bold"
+                                                   for="checkbox_model1" >
+                                                {{model.model}}
+                                            </label>
+                                            {% endif %}
+
                                         </div>
                                         {% endfor %}
                                     </ul>
@@ -46,15 +77,29 @@
                                 </button>
 
                                 <div class="collapse show" id="dashboard-collapse" style="">
-                                    {% for system in machine_system%}
+
+                                    {% for system in machine_systems %}
+                                    {% with number=system.0 %}
+                                    {% if number|stringformat:"i" in checked_systems%}
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
-                                               value="{{system.machine_system}}" id="checkbox_system"
-                                               name="machine_system">
+                                               value="{{system.0}}" id="checkbox_system"
+                                               name="machine_system" checked="True">
                                         <label class="form-check-label text-white fs-6 fw-bold" for="checkbox_system">
-                                            {{system.get_machine_system_display}}
+                                            {{system.1}}
                                         </label>
                                     </div>
+                                    {% else %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{system.0}}" id="checkbox_system1"
+                                               name="machine_system">
+                                        <label class="form-check-label text-white fs-6 fw-bold" for="checkbox_system1">
+                                            {{system.1}}
+                                        </label>
+                                    </div>
+                                    {% endif %}
+                                    {% endwith %}
                                     {% endfor %}
                                 </div>
                             </li>
@@ -75,68 +120,92 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
 
-            <div class="col-9">
-                <p class="fs-1 fw-bolder text-center mb-0"> John Deere parts list</p>
+            <div class="col-lg-9">
                 <hr/>
                 {% for part in parts %}
                 <div class="row">
 
-                    <div class="col d-flex flex-column justify-content-center">
-                        <a href="{% url 'part_detail' part.part_number%}">
+                    <div class="col-12 col-lg-4" id="part_pic_container">
+                        <a href="{% url 'part_detail' part.part_number%}"
+                           class="d-none d-lg-flex justify-content-center">
                             <img src="{{part.image.url}}" alt="part" width="200px" class="me-5">
                         </a>
-                    </div>
-
-                    <div class="col d-flex flex-column justify-content-center">
-                         <div class="row">
-                             <div class="col">
-                        <p>Part number:</p>
-                        <p>Part name:</p>
-                        <p>Price:</p>
-                             </div>
-                             <div class="col">
-                        <p class="fw-bolder">{{part.part_number}}</p>
-                        <p class="fw-bolder">{{part.part_name}}</p>
-                        <p class="fw-bolder">{{part.price}}</p>
-                             </div>
-                        </div>
+                        {% if part.discount_price < 1%}
+                        <span id="discount_tag"><i class="fa-solid fa-tags discount-tag"></i></span>
+                        {% endif %}
                     </div>
 
                     <div class="col d-flex flex-column justify-content-center">
                         <div class="row">
-                            <div class="col mb-3">
-                                <a href="#">
-                                    <button type="submit" class="btn btn-warning w-100">
+                            <div class="col">
+                                <p>Part number:</p>
+                                <p>Part name:</p>
+                                <p>Price:</p>
+                                {% if part.discount_price < 1%}
+                                <p>Discount:</p>
+                                {% endif %}
+                            </div>
+                            <div class="col">
+                                <p class="fw-bolder">{{part.part_number}}</p>
+                                <p class="fw-bolder">{{part.part_name}}</p>
+                                <p class="fw-bolder">{{part.price}}</p>
+                                {% if part.discount_price < 1%}
+                                <p class="fw-bolder text-danger">{{part.discount_price| discount_percent}}%</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col d-flex flex-column justify-content-center">
+                        <form method="get" action="{% url 'add_to_cart' part.part_number %}">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    {% if part.stock_quantity == 0 %}
+                                    <button type="button" class="btn btn-secondary w-100">
                                         + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
                                     </button>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="row text-center">
-                            <div class="col">
-                                <button class="btn btn-secondary"
-                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+                                    {% else %}
+                                    <a href="#">
+                                        <button type="submit" class="btn btn-warning w-100">
+                                            + Add to cart <i class="fa-solid fa-cart-plus cart-icon"></i>
+                                        </button>
+                                    </a>
+                                    {% endif %}
+                                </div>
                             </div>
 
-                            <div class="col">
-                                <input id="form1" min="0" name="quantity" value="1" type="number"
-                                       class="form-control form-control-xs"/>
-                            </div>
+                            <div class="row text-center">
+                                <div class="col">
+                                    <button class="btn btn-secondary " type="button"
+                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepDown()">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
 
-                            <div class="col">
-                                <button class="btn btn-secondary"
-                                        onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
-                                    <i class="fas fa-plus"></i>
-                                </button>
+                                <div class="col">
+                                    <input id="form1" min="1" name="quantity" value="1" type="number"
+                                           class="form-control form-control-xs"/>
+                                </div>
+
+                                <div class="col">
+                                    <button class="btn btn-secondary" type="button"
+                                            onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+
                             </div>
-                        </div>
+                        </form>
+                        {% if part.stock_quantity == 0 %}
+                        <div class="badge bg-secondary text-wrap mt-3" style="width: 6rem;">unavailable</div>
+                        {% elif part.stock_quantity <= 5 %}
+                        <div class="badge bg-warning text-wrap mt-3" style="width: 6rem;">low quantity</div>
+                        {% else %}
+                        <div class="badge bg-success text-wrap mt-3" style="width: 6rem;">available</div>
+                        {% endif %}
                     </div>
                 </div>
                 <hr/>

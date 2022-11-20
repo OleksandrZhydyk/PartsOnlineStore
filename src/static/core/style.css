@@ -6,7 +6,7 @@
 
 .wrapper-image::before {
   content: "";
-  background-image: url("/static/core/index_background.jpg");
+  background-image: url("index_background.jpg");
   background-size: cover;
   position: absolute;
   top: 0;
@@ -71,4 +71,27 @@
     width:  540px;
     height: 300px;
     object-fit: cover;
+}
+
+.buy-icon {
+    font-size: 18px;
+}
+
+.confirm-icon {
+    font-size: 150px;
+}
+
+.discount-tag {
+    font-size: 50px;
+    color: orange;
+}
+
+#part_pic_container {
+    position:relative;
+}
+
+#discount_tag {
+    position: absolute;
+    left: 0;
+    top: 0;
 }

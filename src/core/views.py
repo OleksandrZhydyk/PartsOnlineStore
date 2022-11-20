@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
 from config import settings
 from core.models import Shop
@@ -11,10 +13,9 @@ def index_view(request):
     for index, location in enumerate(shops_location):
         coordinates.append({})
         coordinates[index]["latitude"], coordinates[index]["longitude"] = location[0].split(",")
-        print(coordinates[index]["latitude"])
     return render(
         request,
-        template_name="index.html",
+        template_name="core/index.html",
         context={
             "title": "Main page",
             "data": coordinates,
@@ -24,22 +25,28 @@ def index_view(request):
     )
 
 
+class PageNotFound(TemplateView):
+    template_name = "core/404.html"
+    extra_context = {"title": "Page not found"}
+
+
+class Forbidden(TemplateView):
+    template_name = "core/forbidden.html"
+    extra_context = {"title": "Forbidden"}
+
+
+@login_required
 def generate_shops(request, **kwargs):
-    count = kwargs.get("count")
-    create_shops.delay(count)
-    message = "Shop created"
-    return render(
-        request,
-        template_name="catalogue/generate_data.html",
-        context={"title": "Generate part", "message": message},
-    )
-
-
-# def add_to_cart(request, **kwargs):
-#     print(kwargs)
-#     CartItem.objects.create(part=kwargs.get('part_number'), quantity=kwargs.get('quantity')),
-#                             # cart_id=kwargs.get('user_cart'))
-# return HttpResponseRedirect(reverse("parts"))
-
-# return render(request, template_name="students_create.html", context={"response": response})
-#
+    if request.user.is_staff:
+        count = kwargs.get("count")
+        create_shops(count)
+        message = "Shop created"
+        return render(
+            request,
+            template_name="catalogue/generate_data.html",
+            context={"title": "Generate part", "message": message},
+        )
+    else:
+        return render(request,
+                      template_name="core/forbidden.html",
+                      )

@@ -8,10 +8,8 @@ from rest_framework.viewsets import ModelViewSet
 from accounts.models import CustomUser
 from api.permissions import IsOwnerOrAdmin
 from api.serializers import (CustomUserSerializer, MachineModelSerializer,
-                             OrdersHistorySerializer, PartDetailSerializer,
-                             PartModelSerializer, PartSerializer,
-                             ShopSerializer)
-from cart.models import OrdersHistory
+                             PartDetailSerializer, PartModelSerializer,
+                             PartSerializer, ShopSerializer)
 from catalogue.models import MachineModel, Part
 from core.models import Shop
 
@@ -105,20 +103,3 @@ class ShopRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
-
-
-class OrdersHistoryRetrieveView(RetrieveAPIView):
-    permission_classes = [IsOwnerOrAdmin]
-    queryset = OrdersHistory.objects.all()
-    serializer_class = OrdersHistorySerializer
-
-    def get_object(self):
-        obj = OrdersHistory.objects.get(user__pk=self.kwargs.get("pk"))
-        self.check_object_permissions(self.request, obj.user)
-        return obj
-
-
-class OrdersHistoryListView(ListAPIView):
-    permission_classes = [IsAdminUser]
-    queryset = OrdersHistory.objects.all()
-    serializer_class = OrdersHistorySerializer

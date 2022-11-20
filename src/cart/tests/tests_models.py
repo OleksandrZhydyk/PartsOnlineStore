@@ -14,7 +14,7 @@ class TestCartItemModel(TestCase):
         self.cart.save()
         self.part = Part.objects.create(part_number="test", part_name="test", price=100.99)
         self.part.save()
-        self.cart_item = CartItem.objects.create(part=self.part, cart=self.cart, quantity=2)
+        self.cart_item = CartItem.objects.create(part=self.part, cart=self.cart, quantity=2, price=self.part.price)
         self.cart_item.save()
 
     def tearDown(self):
@@ -35,7 +35,7 @@ class TestCartItemModel(TestCase):
         self.assertEqual(self.cart_item.quantity, 5)
 
     def test_price_by_item(self):
-        self.assertEqual(self.cart_item.get_price_by_part(), 201.98)
+        self.assertEqual(self.cart_item.get_total_by_item(), 201.98)
 
     def test_cart_item_error(self):
 
