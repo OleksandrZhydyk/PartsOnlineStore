@@ -77,16 +77,29 @@
                                 </button>
 
                                 <div class="collapse show" id="dashboard-collapse" style="">
-                                    {% for system in machine_system%}
+
+                                    {% for system in machine_systems %}
+                                    {% with number=system.0 %}
+                                    {% if number|stringformat:"i" in checked_systems%}
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
-                                               value="{{system.machine_system}}" id="checkbox_system"
-                                               name="machine_system">
+                                               value="{{system.0}}" id="checkbox_system"
+                                               name="machine_system" checked="True">
                                         <label class="form-check-label text-white fs-6 fw-bold" for="checkbox_system">
-
-                                            {{system.get_machine_system_display}}
+                                            {{system.1}}
                                         </label>
                                     </div>
+                                    {% else %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{system.0}}" id="checkbox_system1"
+                                               name="machine_system">
+                                        <label class="form-check-label text-white fs-6 fw-bold" for="checkbox_system1">
+                                            {{system.1}}
+                                        </label>
+                                    </div>
+                                    {% endif %}
+                                    {% endwith %}
                                     {% endfor %}
                                 </div>
                             </li>

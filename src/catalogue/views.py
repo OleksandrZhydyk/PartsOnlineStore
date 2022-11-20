@@ -44,7 +44,9 @@ def generate_machine_models(request, **kwargs):
 def get_parts_view(request):
     parts = Part.objects.all()
     models = MachineModel.objects.all()
+    machine_systems = Part.MACHINE_SYSTEMS
     checked_models = []
+    checked_systems = []
 
     if "search" in request.GET:
         field = request.GET.get("field")
@@ -62,17 +64,20 @@ def get_parts_view(request):
     if "machine_system" in request.GET:
         value_list = request.GET.getlist("machine_system")
         parts = parts.filter(machine_system__in=value_list).distinct()
+        checked_systems = value_list
+        print("sys")
+        print(checked_systems)
 
     if "part_name" in request.GET:
         part_name = request.GET["part_name"]
         parts = parts.filter(part_name=part_name)
 
-    machine_systems = parts.distinct("machine_system")
     return render(
         request,
         template_name="catalogue/parts_view.html",
         context={"title": "Filtered parts", "parts": parts, "models": models,
-                 "machine_system": machine_systems, "checked_models": checked_models},
+                 "machine_systems": machine_systems, "checked_models": checked_models,
+                 "checked_systems": checked_systems},
     )
 
 
