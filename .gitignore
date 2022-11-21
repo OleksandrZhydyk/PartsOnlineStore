@@ -129,3 +129,4 @@ dmypy.json
 .idea/
 .env
 PartsOnlineStore_key.pem
+db.sqlite3
