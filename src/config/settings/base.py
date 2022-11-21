@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # dev_apps
     "debug_toolbar",
     "allauth",
     "allauth.account",
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "location_field.apps.DefaultConfig",
     "django_celery_beat",
+    #apps
     "api",
     "core",
     "accounts",
@@ -192,18 +194,18 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LOCATION_FIELD = {
     "provider.google.api": "//maps.google.com/maps/api/js?sensor=false",
-    "provider.google.api_key": "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE",
+    "provider.google.api_key": os.environ.get("GOOGLE_MAPS_API_KEY"),
     "provider.google.api_libraries": "",
 }
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = "alexosgt1@gmail.com"
-EMAIL_HOST_PASSWORD = "xynhbiubxwfroykx"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
-GOOGLE_MAPS_API_KEY = "AIzaSyBCc9LvVmOWLRGWu5Ct8pt4i4om0R3sBmE"
+GOOGLE_MAPS_API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 
 CELERY_BROKER_URL = "redis://redis"
 RESULT_BACKEND = "redis://redis"
