@@ -23,7 +23,7 @@ def login_user(request):
             password = form.cleaned_data.get("password")
             user = authenticate(username=username, password=password)
             if user:
-                login(request, user)
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 return HttpResponseRedirect(reverse("index"))
             else:
                 return render(
