@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import render
 
 from accounts.models import Comment
@@ -70,12 +71,21 @@ def get_parts_view(request):
         part_name = request.GET["part_name"]
         parts = parts.filter(part_name=part_name)
 
+    paginator = Paginator(parts, 5)
+    page_number = request.GET.get('page', 1)
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+
     return render(
         request,
         template_name="catalogue/parts_view.html",
-        context={"title": "Filtered parts", "parts": parts, "models": models,
+        context={"title": "Filtered parts", "models": models,
                  "machine_systems": machine_systems, "checked_models": checked_models,
-                 "checked_systems": checked_systems},
+                 "checked_systems": checked_systems, "page_obj": page_obj},
     )
 
 

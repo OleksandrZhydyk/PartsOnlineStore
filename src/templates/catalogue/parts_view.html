@@ -51,14 +51,14 @@
                                             <input class="form-check-input" type="checkbox" value="{{model.model}}"
                                                    id="checkbox_model" name="machine_model" checked="True">
                                             <label class="form-check-label text-white fs-6 fw-bold"
-                                                   for="checkbox_model" >
+                                                   for="checkbox_model">
                                                 {{model.model}}
                                             </label>
                                             {% else %}
                                             <input class="form-check-input" type="checkbox" value="{{model.model}}"
                                                    id="checkbox_model1" name="machine_model">
                                             <label class="form-check-label text-white fs-6 fw-bold"
-                                                   for="checkbox_model1" >
+                                                   for="checkbox_model1">
                                                 {{model.model}}
                                             </label>
                                             {% endif %}
@@ -125,7 +125,7 @@
 
             <div class="col-lg-9">
                 <hr/>
-                {% for part in parts %}
+                {% for part in page_obj %}
                 <div class="row">
 
                     <div class="col-12 col-lg-4" id="part_pic_container">
@@ -210,6 +210,39 @@
                 </div>
                 <hr/>
                 {% endfor %}
+
+                <nav aria-label="..." class="d-block mx-auto">
+                    {% if page_obj.has_other_pages %}
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link text-black" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                        {% endif %}
+
+                        {% for i in page_obj.paginator.page_range %}
+                        {% if page_obj.number == i %}
+
+                        <li class="page-item active " aria-current="page"><span class="page-link bg-secondary border-secondary">{{ i }}</span></li>
+                        {% else %}
+                        <li class="page-item "><a class="page-link text-black" href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link text-black" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled"><span class="page-link">Next</span></li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+
+
+                </nav>
+
             </div>
         </div>
     </div>
