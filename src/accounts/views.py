@@ -83,7 +83,7 @@ def create_comment(request, **kwargs):
 def generate_user(request, **kwargs):
     if request.user.is_staff:
         count = kwargs.get("count")
-        create_user(count)
+        create_user.delay(count)
         message = "User created"
         return render(
             request,
@@ -93,7 +93,7 @@ def generate_user(request, **kwargs):
     else:
         return render(request,
                       template_name="core/forbidden.html",
-                      )
+                      context={"title": "Forbidden"})
 
 
 def signup(request):
@@ -119,7 +119,7 @@ def activate_user(request, uuid64, token):
     if user and TokenGenerator().check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return HttpResponseRedirect(reverse("index"))
     else:
         return HttpResponse("Activation link is invalid!")

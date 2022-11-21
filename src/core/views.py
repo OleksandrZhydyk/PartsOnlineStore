@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.views.generic import TemplateView
 
 from config import settings
 from core.models import Shop
@@ -25,14 +24,14 @@ def index_view(request):
     )
 
 
-class PageNotFound(TemplateView):
-    template_name = "core/404.html"
-    extra_context = {"title": "Page not found"}
+def page_not_found_view(request, exception):
+    return render(request, template_name="core/404.html",
+                  context={"title": "Page not found"})
 
 
-class Forbidden(TemplateView):
-    template_name = "core/forbidden.html"
-    extra_context = {"title": "Forbidden"}
+def unauthorized_view(request, exception):
+    return render(request, template_name="core/forbidden.html",
+                  context={"title": "Forbidden"})
 
 
 @login_required
@@ -49,4 +48,4 @@ def generate_shops(request, **kwargs):
     else:
         return render(request,
                       template_name="core/forbidden.html",
-                      )
+                      context={"title": "Forbidden"})
