@@ -8,9 +8,6 @@
         <div class="row">
             <div class="col d-flex flex-column justify-content-center" id="part_pic_container">
                 <img src="{{part.image.url}}" alt="part" width="250px" class="me-5">
-                {% if part.discount_price < 1%}
-                <span id="discount_tag"><i class="fa-solid fa-tags discount-tag"></i></span>
-                {% endif %}
             </div>
             <div class="col d-flex flex-column justify-content-center">
                 <div class="row">

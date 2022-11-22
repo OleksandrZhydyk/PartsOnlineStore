@@ -133,9 +133,6 @@
                            class="d-none d-lg-flex justify-content-center">
                             <img src="{{part.image.url}}" alt="part" width="200px" class="me-5">
                         </a>
-                        {% if part.discount_price < 1%}
-                        <span id="discount_tag"><i class="fa-solid fa-tags discount-tag"></i></span>
-                        {% endif %}
                     </div>
 
                     <div class="col d-flex flex-column justify-content-center">
@@ -196,7 +193,6 @@
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
-
                             </div>
                         </form>
                         {% if part.stock_quantity == 0 %}
@@ -239,10 +235,7 @@
                         {% endif %}
                     </ul>
                     {% endif %}
-
-
                 </nav>
-
             </div>
         </div>
     </div>
