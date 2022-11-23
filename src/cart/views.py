@@ -50,6 +50,23 @@ def get_total_cost(cart_data):
     return round(sum(int(value["quantity"]) * value["price"] * value["discount"] for value in cart_data.values()), 2)
 
 
+def redirect_view_cart(request):
+    cart_data = request.session.get("cart")
+    function_redirected = request.GET.get("make_order")
+    if function_redirected:
+        for part_number, quantity in request.GET.items():
+            if part_number == "make_order":
+                continue
+            cart_data[part_number]["quantity"] = quantity[0]
+        request.session["cart"] = cart_data
+        return HttpResponseRedirect(reverse("make_order"))
+    else:
+        for part_number, quantity in request.GET.items():
+            cart_data[part_number]["quantity"] = quantity[0]
+        request.session["cart"] = cart_data
+        return HttpResponseRedirect(reverse("view_cart"))
+
+
 def view_cart(request):
     cart_data = request.session.get("cart")
     if cart_data:

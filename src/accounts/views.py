@@ -50,8 +50,9 @@ def logout_user(request):
 
 
 @login_required
-def update_profile(request, pk):
-    profile = get_object_or_404(Profile, pk=pk)
+def update_profile(request, **kwargs):
+    print(kwargs.get('pk'))
+    profile = get_object_or_404(Profile, pk=kwargs.get('pk'))
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
