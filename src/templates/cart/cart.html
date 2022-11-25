@@ -21,11 +21,6 @@
                    class="d-none d-lg-flex justify-content-center">
                     <img src="{{part.image.url}}" alt="part_image" width="200px">
                 </a>
-                {% if part.discount_price < 1 %}
-                <span id="discount_tag">
-                    <i class="fa-solid fa-tags discount-tag"></i>
-                </span>
-                {% endif %}
 
             </div>
             <div class="col-4 d-flex flex-column justify-content-center">
@@ -65,7 +60,7 @@
                     </div>
                     {% endwith %}
                     <div class="col">
-                        <button class="btn btn-secondary" type="button"
+                        <button class="btn btn-secondary" type="button" id="button-plus"
                                 onclick="this.parentNode.parentNode.querySelector('input[type=number]').stepUp()">
                             <i class="fas fa-plus"></i>
                         </button>
@@ -105,5 +100,6 @@
         </div>
     </form>
     </br>
+
 </div>
 {% endblock %}

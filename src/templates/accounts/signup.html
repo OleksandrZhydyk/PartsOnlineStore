@@ -7,6 +7,9 @@
 <div class="container">
     <div class="content">
         <form method="POST" style="margin: auto;" class="col-md-4 text-center mt-5">
+            <p class="text-center text-danger fs-4 fst-italic">
+                {{message}}
+            </p>
             {% csrf_token %}
                 {% for element in form %}
             <div>{{element}}</div><br/>
