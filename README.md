@@ -1,5 +1,7 @@
 # PartsOnlineStore
 
+## About The Project
+
 App for searching and buying spare parts.
 
 The application has an open and closed part of the functionality for registered users.
@@ -19,7 +21,7 @@ A registered user in the app can:
 2) complete the order of goods by providing contact details and order data;
 3) view the own history of orders, as well as their contents;
 
-# Prerequisites
+## Prerequisites
 
 Docker, Docker Compose must be installed.
 If not, please see:
@@ -29,14 +31,14 @@ If not, please see:
 for installation instructions.
 
 
-# Installation
+## Installation
 
 1. Clone the repo:
 ```sh
 git clone https://github.com/AlexandrZhydyk/PartsOnlineStore.git
 ```
 
-# Usage
+## Usage
 1. Add app configuration to your .env file in the root of your project:
 ```sh
 MODE=prod
@@ -66,10 +68,19 @@ GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_API_KEY
 docker compose up -d --build
 ```
 
-3. Fill the database with preloaded data:
+3. Create an admin or fill the database with preloaded data.
+#### Creating own super user:
+```sh
+docker compose exec backend bash
+python src/manage.py createsuperuser
+```
+#### Filling database:
 ```sh
 docker compose exec backend bash
 python src/manage.py loaddata db.json
+
+ADMIN_EMAIL=admin@admin.com
+ADMIN_PASSWORD=admin
 ```
 4. Finaly you will be able to access the web app via http://localhost on your host machine.
    
