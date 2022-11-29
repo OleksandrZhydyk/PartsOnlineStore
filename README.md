@@ -26,7 +26,7 @@ Docker, Docker Compose
 # Installation
 
 1. Clone the repo:
-`Inline code` git clone https://github.com/AlexandrZhydyk/PartsOnlineStore.git
+`git clone https://github.com/AlexandrZhydyk/PartsOnlineStore.git`
 
 2. Enter your API in config.js
 # code block
