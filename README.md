@@ -21,15 +21,55 @@ A registered user in the app can:
 
 # Prerequisites
 
-Docker, Docker Compose
+Docker, Docker Compose must be installed.
+If not, please see:
+
+[Docker](https://docs.docker.com/engine/install/) and
+[Docker compose](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-22-04)
+for installation instructions.
+
 
 # Installation
 
 1. Clone the repo:
-`git clone https://github.com/AlexandrZhydyk/PartsOnlineStore.git`
+```sh
+git clone https://github.com/AlexandrZhydyk/PartsOnlineStore.git
+```
 
-2. Enter your API in config.js
-# code block
-const API_KEY = 'ENTER YOUR API';
-3. Run the command:
-  docker compose up --build
+# Usage
+1. Add app configuration to your .env file in the root of your project:
+```sh
+MODE=prod
+DJANGO_SETTINGS_MODULE=config.settings.${MODE}
+
+LOCAL_PORT=YOUR_LOCAL_PORT
+WSGI_PORT=YOUR_WSGI_PORT
+
+POSTGRES_DB=YOUR_DATABASE_NAME
+POSTGRES_PASSWORD=YOUR_DATABASE_PASSWORD
+POSTGRES_USER=YOUR_DATABASE_USER
+
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+
+PGADMIN_DEFAULT_EMAIL=YOUR_PGADMIN_EMAIL
+PGADMIN_DEFAULT_PASSWORD=YOUR_PGADMIN_PASSWORD
+
+EMAIL_HOST_USER=YOUR_EMAIL_HOST
+EMAIL_HOST_PASSWORD=YOUR_EMAIL_HOST_PASSWORD
+
+GOOGLE_MAPS_API_KEY=YOUR_GOOGLE_API_KEY
+```
+
+2. Run the command for building and running the images:
+```sh
+docker compose up -d --build
+```
+
+3. Fill the database with preloaded data:
+```sh
+docker compose exec backend bash
+python src/manage.py loaddata db.json
+```
+4. Finaly you will be able to access the web app via http://localhost on your host machine.
+   
