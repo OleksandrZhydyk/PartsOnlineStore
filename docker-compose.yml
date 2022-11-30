@@ -77,19 +77,19 @@ services:
     depends_on:
       - backend
 
-#  celery:
-#    build: ./
-#    command:
-#      - ./commands/start_celery.sh
-#    restart: on-failure
-#    volumes:
-#      - ./src:/PartsOnlineStore
-#      - ./commands:/PartsOnlineStore/commands
-#    env_file:
-#      - .env
-#    depends_on:
-#      - redis
-#      - backend
+  celery:
+    build: ./
+    command:
+      - ./commands/start_celery.sh
+    restart: on-failure
+    volumes:
+      - ./src:/PartsOnlineStore
+      - ./commands:/PartsOnlineStore/commands
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - backend
 #
 #  celerybeat:
 #    build: ./
@@ -105,13 +105,13 @@ services:
 #      - redis
 #      - celery
 #
-#  redis:
-#    image: redis
-#    env_file:
-#      - .env
-#    restart: on-failure
-#    depends_on:
-#      - backend
+  redis:
+    image: redis
+    env_file:
+      - .env
+    restart: on-failure
+    depends_on:
+      - backend
 #
 #  flower:
 #      build: ./
