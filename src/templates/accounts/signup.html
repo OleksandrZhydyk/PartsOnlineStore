@@ -7,10 +7,17 @@
 <div class="container">
     <div class="content">
         <form method="POST" style="margin: auto;" class="col-md-4 text-center mt-5">
+            <p class="text-center text-danger fs-4 fst-italic">
+                {{message}}
+            </p>
+
             {% csrf_token %}
+<!--                {{form.as_p}}-->
+
                 {% for element in form %}
-            <div>{{element}}</div><br/>
+            <p>{{element}}</p>
             {% endfor %}
+<!--            <ul class="errorlist"><li>This password is to common</li><li>This password is entirely numeric</li></ul>-->
             <input type="submit" value="Signup" class="btn btn-warning mt-3 btn-lg">
         </form>
     </div>

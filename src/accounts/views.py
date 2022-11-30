@@ -51,7 +51,6 @@ def logout_user(request):
 
 @login_required
 def update_profile(request, **kwargs):
-    print(kwargs.get('pk'))
     profile = get_object_or_404(Profile, pk=kwargs.get('pk'))
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES, instance=profile)
@@ -106,6 +105,8 @@ def signup(request):
             user.save()
             send_registration_email(request=request, user_instance=user)
             return render(request, template_name="accounts/sent_email_confirmation.html", context={"user": user})
+        else:
+            return render(request, "accounts/signup.html", {"form": form, "message": "Invalid email"})
     else:
         form = RegistrationForm()
     return render(request, "accounts/signup.html", {"form": form})
