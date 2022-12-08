@@ -93,7 +93,7 @@ def get_part_detail(request, **kwargs):
     part_number = kwargs.get("part_number")
     part = Part.objects.get(part_number=part_number)
     shops = Shop.objects.filter(part=part)
-    comments = Comment.objects.filter(part=part).order_by("-created")
+    comments = Comment.objects.select_related('user').filter(part=part).order_by("-created")
     models = MachineModel.objects.filter(part=part)
     return render(
         request,

@@ -7,10 +7,23 @@
 <div class="container">
     <div class="content">
         <form method="POST" style="margin: auto;" class="col-md-4 text-center mt-5">
+            <p class="text-center text-danger fs-4 fst-italic">
+                {{message}}
+            </p>
+
             {% csrf_token %}
-                {% for element in form %}
-            <div>{{element}}</div><br/>
+
+            {% for element in form %}
+            <p>{{element}}</p>
             {% endfor %}
+            {% if password_comment %}
+           <ul>Password must have:
+               <li>at least 12 characters</li>
+               <li>a mixture both uppercase and lowercase letters</li>
+               <li>a mixture of letters and numbers</li>
+               <li>inclusion of at least one special character, e.g., ! @ # ?</li>
+           </ul>
+            {% endif %}
             <input type="submit" value="Signup" class="btn btn-warning mt-3 btn-lg">
         </form>
     </div>
