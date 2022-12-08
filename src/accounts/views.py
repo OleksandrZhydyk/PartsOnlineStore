@@ -106,7 +106,8 @@ def signup(request):
             send_registration_email(request=request, user_instance=user)
             return render(request, template_name="accounts/sent_email_confirmation.html", context={"user": user})
         else:
-            return render(request, "accounts/signup.html", {"form": form, "message": "Invalid email"})
+            return render(request, "accounts/signup.html", {"form": form, "message": "Invalid email or password",
+                                                            "password_comment": True})
     else:
         form = RegistrationForm()
     return render(request, "accounts/signup.html", {"form": form})

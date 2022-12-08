@@ -12,12 +12,18 @@
             </p>
 
             {% csrf_token %}
-<!--                {{form.as_p}}-->
 
-                {% for element in form %}
+            {% for element in form %}
             <p>{{element}}</p>
             {% endfor %}
-<!--            <ul class="errorlist"><li>This password is to common</li><li>This password is entirely numeric</li></ul>-->
+            {% if password_comment %}
+           <ul>Password must have:
+               <li>at least 12 characters</li>
+               <li>a mixture both uppercase and lowercase letters</li>
+               <li>a mixture of letters and numbers</li>
+               <li>inclusion of at least one special character, e.g., ! @ # ?</li>
+           </ul>
+            {% endif %}
             <input type="submit" value="Signup" class="btn btn-warning mt-3 btn-lg">
         </form>
     </div>
